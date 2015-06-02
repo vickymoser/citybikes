@@ -9,7 +9,10 @@
     <script src="javascripts/vienna_mapview.js"></script>
     <script src="javascripts/datepicker.js"></script>
     <script src="javascripts/filter_object.js"></script>
+    <script src="javascripts/form_creator.js"></script>
     <script src="javascripts/city_bike_prediction_new.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Vickymoser.GitHub.io : Project Website">
@@ -317,7 +320,7 @@ on("unselect",function(id) {
       var type = document.getElementById("newFunctionSelect").value;
 
       if (type == 'gaussian_function') {
-          bikeChart.addFunction(new GaussianFunction(0.3, 3, 5, 2));
+        bikeChart.addFunction(new GaussianFunction(0.3, 3, 5, 2));
       } else if (type == 'linear_function') {
         bikeChart.addFunction(new LinearFunction(0.3, 3, 12));
       } else if (type == 'quadratic_function') {
@@ -330,6 +333,20 @@ on("unselect",function(id) {
  
     function createSlider(type){
 
+      if (type == 'gaussian_function') {
+        $( "#slidercontainer" ).append(createFunction(gaussFunctionForm));
+      } else if (type == 'linear_function') {
+        $( "#slidercontainer" ).append(createFunction(linearFunctionForm));
+      } else if (type == 'quadratic_function') {
+        $( "#slidercontainer" ).append(createFunction(linearFunctionForm));
+      }
+
+      bikeChart.transitionValueChanged();
+    
+
+
+
+      /*
         //Create Container
         var slidersubcontainer = document.createElement("div");
         slidersubcontainer.setAttribute("id","slidersubcontainer"+inputsCounter);
@@ -384,10 +401,19 @@ on("unselect",function(id) {
         slider.value = 5;
 
         update(slider);
+        */
     }
 
     
+    function toggleShowDetail(event) {
+      var elem = event.target;
 
+      console.log(elem);
+      //elem.toggleClass('hidden');
+
+      $('.overviewcontainer').toggleClass('hidden');
+      $('.detailcontainer').toggleClass('hidden');
+    }
 
     function mouseover(subcontainer) {
 
@@ -411,51 +437,6 @@ on("unselect",function(id) {
       bikeChart.beginValueTransition();
       //showPhantomFunction();
 
-
-     };
-
-      function update(slider) {
-        var id = slider.id;
-
-        var idx = +id.replace("slider", "");
-
-        var labelId = "sliderLabel"+idx;
-
-        document.getElementById(labelId).innerHTML =slider.value;
-        //slider.value = value;
-
-        var slidervalue = +slider.value;
-
-        var k = slider.name;
-
-        /*
-        if (phantomFunction != null) {
-         func = phantomFunction.getFunction(idx);
-        } else */
-        /*
-        {
-          func = bikeChart.currentFunction().getFunction(idx);
-        }
-
-        //console.log("updated" + func.__type);
-        if (func.__type == 'gaussian_function') {
-          //console.log("updated gaussian_function");
-          func.b = slidervalue;
-        } else if (func.__type == 'linear_function') {
-          //console.log("updated linear_function");
-          func.k = slidervalue;
-        } else if (func.__type == 'quadratic_function') {
-          //console.log("updated quadratic_function");
-          func.weight = slidervalue;
-        }
-        */
-
-        //func.updateK(slidervalue);
-
-        bikeChart.updateFunctionValue(idx,k, slidervalue );
-
-        bikeChart.transitionValueUpdated();
-        //updateGraph();
 
      };
 

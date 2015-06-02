@@ -221,6 +221,14 @@ loadData( function() {
   my.updateFunctionValue = function(index, key, value) {
     var f = currentFunction.getFunction(index);
 
+    var newVal = value/100;
+
+    if (key == 'b') {
+      newVal*=filteredData.length;
+    } 
+
+
+
     f.setValueForKey(key, value);
   }
 
