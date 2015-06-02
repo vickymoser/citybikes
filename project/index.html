@@ -305,7 +305,18 @@ on("unselect",function(id) {
   document.getElementById("w"+id).checked = false;
 });
 
+$(".districtcheckbox").change(function() {
+	var id = this.id;
 
+	var distictNumber = + id.replace("w","");
+
+    if(this.checked) {
+    	mapsSelect.selectDistricts([distictNumber]);
+    } else {
+
+    	mapsSelect.unselectDistricts([distictNumber]);
+    }
+});
 
 
 //mapsSelect.selectDistricts([1,2,3,4,5,22,13]);
