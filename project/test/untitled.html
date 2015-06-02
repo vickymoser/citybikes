@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to remove two elements from the array.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function Function(weight) {
+	this.weight = 0;
+
+	this.lineFunctionX =  function(d) {
+		return d.x;
+	};
+	this.lineFunctionY = null;
+
+	console.log("function with weight"+weight);
+
+};
+
+
+Function.prototype = {
+    constructor: Function,
+
+    toString:function ()  {
+        return "Function" ;
+    }
+};
+
+function LinearFunction(weight, k, d) {
+
+	Function.call(this, weight);
+
+	this.k = k;
+	this.d = d;
+
+
+
+	this.lineFunctionY = function(d) {
+		return 10 + Math.sin(d.x);
+	}
+
+	this.lineFunction = fun
+
+	console.log("function with k:"+k+", d:"+d);
+};
+
+LinearFunction.prototype = {
+    constructor: LinearFunction,
+    
+    toString:function ()  {
+        return "LinearFunction" ;
+    }
+};
+
+
+function ComposedFunction() {
+
+	Function.call(this, 1);
+	this.functions = [];
+};
+
+ComposedFunction.prototype = {
+    constructor: User,
+    addFunction:function (f)  {
+        this.functions.push(f)
+    },
+    removeFunction:function (f)  {
+		var i = array.indexOf("b");
+		if(i != -1) {
+			array.splice(i, 1);
+		}
+    },
+    toString:function ()  {
+        return "ComposedFunction" ;
+    }
+};
+
+
+
+var fun = new LinearFunction(0.3, 3, 5);
+
+
+document.getElementById("demo").innerHTML = fun.toString();
+
+function myFunction() {
+    fruits.splice(0, 2);
+    document.getElementById("demo").innerHTML = fun;
+}
+</script>
+
+</body>
+</html>

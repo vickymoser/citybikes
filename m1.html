@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vickymoser.GitHub.io : Project Website">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vickymoser.GitHub.io</title>
+  </head>
+
+  <body>
+
+
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/vickymoser">View on GitHub</a>
+
+          <h1 id="project_title">VIS Project</h1>
+          <h2 id="project_tagline">Project Website</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+     
+
+<h3>
+<a href="index.html" style="padding-right: 20px;">Home</a> 
+<a href="team.html" style="padding-right: 20px;">Project Team</a> 
+<a href="m1.html" style="padding-right: 20px;">M1</a> 
+<a href="m2.html" style="padding-right: 20px;">M2</a> 
+<a href="m3.html" style="padding-right: 20px;">M3</a> 
+<a href="project/index.html" style="padding-right: 20px;">Project</a> 
+</h3>
+
+  <a href="https://docs.google.com/spreadsheets/d/1QXzQFIFPGSqhCFK-oI_Td3QLD1hoElAnZYbLqEKQBKE/edit?usp=sharing" style="padding-right: 20px;">Tasks & Ownership</a> 
+
+
+<h3>M1: Project Summary (analyzing citybike data)</h3>
+
+<p>
+For our project we are going to execute the task “analyzing citybike data”. We chose this project due to the fact that we all used the service before and found it interesting to analyze the data behind the service. After we analyzed the new data set we came to the conclusion that our ideas are realizable.
+</p>
+
+<p>
+Old assumption: <br>
+At this point we aren’t sure how our data set is going to look like except that it will include the “damage reports”, “all driven routes” and “stations”. We were able to extract some data from the city bike map view from the source files and we found this web link: 
+<a href="http://dynamisch.citybikewien.at/citybike_xml.php?json"> Json-Citybike-Data</a>. 
+This dataset includes the coordinates of each station and the number of available bikes as well as the total capacity. Our proposal is based on our assumptions of what the dataset will look like. We want to start a technique project.
+</p>
+
+<h4>Description of the task </h4>
+
+<p>
+The aim of our visualization is to provide historic statistics to employees of the CityBike organization. On the one hand we would like to provide them with assumptions of a day in the future by processing the younger data and on the other hand we will be showing the statistics for specific stations for certain timeframes.
+</p>
+<p>
+View 1:
+This view is specifically for the department head that is responsible for the maintenance and delivering of the bikes. The view should provide warnings and the demand of the following day so that the personal can be prepared for future needs of the station. This task is hard to accomplish because you have to analyses the older data for this specific task and provide intelligent feedback to the user. Because of this it would be difficult to use static tools like tableau.
+</p>
+<p> 
+View 2:
+This view is also aimed at the staff of CityBikes. It displays a specific selected station for which one can then see the top stations from where the bikes came from and the top stations where bikes lended from this station were returned. <!-- probleme mehr schildern -->
+</p>
+
+<h4>Description of solution </h4>
+
+<h5>View 1</h5>
+<p><img src="images/view_1.JPG" alt="View 1" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+View 1: The settings of the view are on the left bottom corner. The day is preset to today, but you can change it to any day in the future. You can also change the station. By default no station is selected. All of the data that is going to be displayed is an assumption based on the data of the past. On the right side you can see the “warning column”. There are three types of warnings: most empty station, most broken bikes at a station and most used bikes at a station. For each warning type there are two warning for those stations where the description fits the most. On the left side you can see a line diagram. The X-axis are the hours of the day from 0-24. The Y-axis is the number of bikes that where lent at that point in time. When you pick a station the “warning column” will stay the same and the line diagram will change to the specific data of the station but the diagram structure stays the same.
+</p>
+
+<h5>View 2</h5>
+<p><img src="images/view_2.JPG" alt="View 2"></p>
+<p>
+This diagramm should show where the bikes are rented from and where to the bikes are returned.
+One can select a specific bike-station and specify a timeframe. 
+ At the center of the diagram an information box provides the main information and statistics for the selected station. This graph shows various information like the average number of available bikes, total capacity, number of damaged bikes, how many bikes where brought back to or taken from the selected station.
+On either side of the information box are bar charts - one for the stations from which the bikes arrived from at the selected station and one for the stations where the bikes are retuned from after hiring them at the selected station.
+The bar chart displaying the origin of the rented bikes returned at the selected station shows where the most bikes are coming from. The number of stations shown should be limited to a few results, so the viewer is not overwhelmed by mostly unnecessary information.
+The chart to the right shows where most bikes are returned after they were hired at the selected station. 
+This visualization is meant to show the typical routes people are riding and hopefully provide a basis for planning how many bikes should be placed in each station or even where its best to build new stations.
+</p>
+
+<h4>Expertise of group members</h4>
+
+<h5>Anreiter Simon(a1201759)</h5>
+<p>
+Prior to this project I attended the course HCI where I gained some insight on how to important visual presentation can be. Apart from this I have no experience with visualization but am very involved in programming which is why tools like D3 will hopefully be quick to understand for me. 
+</p>
+
+<h5>Christoph Eitenberger(a1248272)</h5>
+<p>
+Before this class I had no experience with visualization except what I've learned in school. The class already gave me an insight into tableau and D3 which was very interesting. In the context of D3 I have some experience with JavaScript and JQuery. 
+</p>
+
+<h5>Moser Victoria (a1200628)</h5>
+<p>
+Previously to attending the Visualization class I had no experience with visualization. Utilizing Tableau was very interesting and self explanatory whereby the assignment using D3 showed some challenges and difficulties although I am sure that it gets easier the more practice one has. 
+</p>
+
+<h5>Polzer Mikél (a0947192)</h5>
+<p>
+I also haven't had any direct experience with visualization before attending this class - at least not that I was aware of it (I attended the HCI class, so I have some background in some of the basics which are important for the field of visualization). I have a strong interest in the topic from a cognitive science (Which design suits our perceptional system best?) as well as computer science (How to implement the design choices best?) point of view. I have a little experience with JavaScript, but haven't used D3 outside the context of this course. 
+</p>
+
+<!--
+<ul>
+<li>Description of the target application, dataset, users, and task(s).
+  <ul>
+    <li>These descriptions should be detailed and specific. Give specific examples of user goals and the information and interactions the visualization tool must support in order to achieve those goals.</li>
+    <li>Explain why these goals are hard to accomplish with existing standard tools.</li>
+  </ul>
+</li>
+</ul>
+
+<ul>
+
+<li>Expertise of the group members
+  <ul>
+  <li>Your level of experience or knowledge of the application area and the type of development / languages / toolkits you think will be required. If you have no experience this is fine! This section is to help me assess whether the scope of the project is reasonable for your team.</li>
+  </ul>
+</li>
+</ul>
+-->
+<!-- <h2> <b>Topic:<b/> Analyzing Citybike Data</h2>
+
+<p>Vienna’s bike-sharing program, Citybike, is becoming more and more popular every year. In 2014 there were nearly 1 million rides in Vienna. A well-developed network, with more than 120 stations in 18 districts, offers the possibility to use these bicycles as an alternative form of transport and for getting around.</p>
+
+<p>The analysis of the recorded data has always been an important part of the daily work of the city bike operators. On the one hand this enables the identification and remedying of weak points and on the other hand they can make better decisions regarding the network expansion.</p>
+
+<p>At the moment, balancing the different filling levels of the stations is one of the biggest challenges. The bikes are not spread evenly across the city and must be moved by the technicians between the stations every day. This is a costly and time-consuming process that needs to be optimized.</p>
+
+<p>Data:</p>
+
+<p>Damage reports („Schadensmeldungen“)</p>
+<p>All driven routes</p>
+<p>Stations (timestamps of available bikes/boxes)</p>
+<p>Overall goals:</p>
+
+<p>Build interactive visualizations which help to better understand the different aspects of Citybike Vienna</p>
+<p>Don’t place the main focus just on a single dataset. Combine them to get interesting insights.</p>
+-->
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

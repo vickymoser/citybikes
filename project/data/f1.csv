@@ -1,0 +1,39 @@
+constructor,year,points
+Red Bull,2010,498
+McLaren,2010,454
+Ferrari,2010,396
+Mercedes,2010,214
+Renault,2010,163
+Williams,2010,69
+Force India,2010,68
+Sauber,2010,44
+Toro Rosso,2010,13
+Lotus,2010,0
+Red Bull,2011,650
+McLaren,2011,497
+Ferrari,2011,375
+Mercedes,2011,165
+Renault,2011,73
+Force India,2011,69
+Sauber,2011,44
+Toro Rosso,2011,41
+Williams,2011,5
+Lotus,2011,0
+Red Bull,2012,460
+Ferrari,2012,400
+McLaren,2012,378
+Lotus,2012,303
+Mercedes,2012,142
+Sauber,2012,126
+Force India,2012,109
+Williams,2012,76
+Toro Rosso,2012,26
+Red Bull,2013,596
+Mercedes,2013,360
+Ferrari,2013,354
+Lotus,2013,315
+McLaren,2013,122
+Force India,2013,77
+Sauber,2013,57
+Toro Rosso,2013,33
+Williams,2013,5
