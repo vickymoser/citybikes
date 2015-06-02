@@ -25,6 +25,7 @@ var margin = {top: 20, right: 40, bottom: 30, left: 40},
     height = chartHeight - margin.top - margin.bottom;
 
 
+var bandWidth = 0.5;
 
 var xScale = d3.scale.linear() // The between-group axis
     .range([0, width]);
@@ -59,6 +60,10 @@ var chart = svg.append("g")
 var hoverFunctions = [];
 
 var currentFunction = new ComposedFunction();
+
+//TODO: Christoph
+//var currentFilter = new ComposedFilterFunction();
+
 var oldFunction = null;
 
 var onReadyCallback = null;
@@ -113,7 +118,6 @@ function parseCitbikeData(d) {
 }
 
 
-
 function loadData(completion) {
  
     var fileFahrtenPath = "data/fahrten_2012.csv";
@@ -141,8 +145,9 @@ function loadData(completion) {
         //console.log(loop);
         console.log(composedFilterFunction.getGraph());
 
-        completion();
       }
+      
+        completion();
     });
 }
 
@@ -218,6 +223,7 @@ loadData( function() {
 
     f.setValueForKey(key, value);
   }
+
 
   function addHoverFunctionForKey(index) {
 
@@ -497,13 +503,27 @@ loadData( function() {
     chart.select('.actualline')
       .attr('d', actualLineFunction(filteredData));
 
+    actualLineBand = d3.svg.area()
+    .x(function(d) {
+      return xScale(d.x);
+    })
+    .y0(function(d) {
+      return yScale(d.y - bandWidth/2);
+    })
+    .y1(function(d) {
+      return yScale(d.y + bandWidth/2);
+    })
+    .interpolate('basis');
+
+    chart.select('.band')
+      .attr('d', actualLineBand(filteredData));
+
 
   }
 
 
 
     predictionLineFunction = generateLineForFunction(currentFunction);
-    actualLineFunction;
 
 
     var selection = d3.select('.line');
@@ -604,12 +624,36 @@ loadData( function() {
     })
     .interpolate('basis');
 
+
+
+    actualLineBand = d3.svg.area()
+    .x(function(d) {
+      return xScale(d.x);
+    })
+    .y0(function(d) {
+      return yScale(d.y - bandWidth/2);
+    })
+    .y1(function(d) {
+      return yScale(d.y + bandWidth/2);
+    })
+    .interpolate('basis');
+
+    chart.append('svg:path')
+      .attr('class','band')
+      .attr('d', actualLineBand(filteredData))
+      .attr('stroke', 'none')
+      .attr('stroke-width', 2)
+      .attr('fill', 'green')
+      .attr('opacity', 0.1);
+    //Actual Line
     chart.append('svg:path')
       .attr('class','actualline')
       .attr('d', actualLineFunction(filteredData))
       .attr('stroke', 'green')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
+
+    //Actual Line Margin
 
 
     if (valueTransitionInProgress) {
@@ -642,6 +686,15 @@ loadData( function() {
 
     }
   }
+
+
+
+  //TODO: Update Filter 
+
+  //
+
+
+
 
   return my;
 }
