@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vickymoser.GitHub.io : Project Website">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Vickymoser.GitHub.io</title>
+  </head>
+
+  <body>
+
+
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/vickymoser">View on GitHub</a>
+
+          <h1 id="project_title">VIS Project</h1>
+          <h2 id="project_tagline">Project Website</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+     
+
+<h3>
+<a href="index.html" style="padding-right: 20px;">Home</a> 
+<a href="team.html" style="padding-right: 20px;">Project Team</a> 
+<a href="m1.html" style="padding-right: 20px;">M1</a> 
+<a href="m2.html" style="padding-right: 20px;">M2</a> 
+<a href="m3.html" style="padding-right: 20px;">M3</a> 
+<a href="project/index.html" style="padding-right: 20px;">Project</a> 
+</h3>
+
+
+<br>
+<h3>M2: Proposal + Lo-Fi Prototyping - May 5+7</h3> <br>
+
+<h4>Dokumentation:</h4>
+<a href="https://docs.google.com/spreadsheets/d/1QXzQFIFPGSqhCFK-oI_Td3QLD1hoElAnZYbLqEKQBKE/edit?usp=sharing" style="padding-right: 20px;">Tasks & Ownership</a> 
+
+<p><h4>User:</h4>
+Matthew - A CityBike-Employee utilizing this Implementation is most likely a TeamLead/Manager in the logistics.</p>
+
+<p>
+<h4>Goal:</h4>
+Enabling CityBike Employees to forecast and plan ahead by providing them with an interactive and adjustable tool visualizing historic trends and usage. Aiding users to predict the usage for a future time period but also allowing them to adjust certain parameters changing the automatically generated prediction. </p>
+
+<p>
+<h4>Scenario:</h4>
+Matthew works at CityBike Vienna and is in charge of logistics. This means he takes care of managing the CityBike stations by refilling them with bikes when needed, picking up broken bikes or relocating bikes. <br>
+Matthew faces daily challenges ensuring the stations are full and enough working bikes are available. Today Matt wants to plan ahead and forecast next <font clior="red">weekends (Filter Tag, Woche, Monat, Wochenende etc)</font> usage. Vienna isn’t as big as Paris but still has 120 Stations. To narrow down his options he decides to focus on the 2nd district first <font clior="red">(Filter für Bezirke)</font>. There are 12 <font clior="red">stations (Filter für Stationen) </font>and since it is in the heart of the touristic area he takes all stations into consideration.
+Matt is now able to see a calculated prediction for the selected timeframe, district and stations. It shows him a number of bikes which could possibly be rented. The toli also allows him to <font clior="red"> select a specific day and see the usage throughout it (Rushour etc)</font>.</p>
+
+<p>
+After reviewing the data Matt is interested to see what last weekend looked like for his selected criteria. He modifies the selected weekend and now sees the prediction generated for that historic time frame vs the actual usage. The usage was higher than predicted and Matthew now fears the same thing could happen again this weekend. He now decides to <font clior="red">set new Parameters for the prediction. He edits the historic prediction so it is accurate, saves these and applies the increase on his future prediction for next weekend. </font> The initial search results have now been modified and shows the changes.<br>
+Matt is happy with this forecast and begins to plan the needed bikes and staff for the 2nd district next weekend.</p>
+
+<!-- Mockup C Start -->
+
+<h4>Mockup A</h4>
+
+<p><img src="images/VIS_MockUp_3.png" alt="MockUp_1.3" WIDTH="70%" HEIGHT="70%"></p>
+
+This diagram allows the user to interactively optimize the prediction formula.
+
+On the top filters like district or a certain time frame can be applied
+On the left parameters of the formula can be edited.
+</br>
+The barchart shows:
+<ol>
+<li>
+ (if available) the actual number of users (red line)</li>
+<li>The old predicted values (grey bars)</li>
+<li>The current predictions (blue bars)</li>
+</ol>
+
+<p><img src="images/VIS_MockUp_4.png" alt="MockUp_1.4" WIDTH="70%" HEIGHT="70%"></p>
+
+The goal is to as closely as possible approximate the red line.
+
+After changes are made to the parameters the grey bars display the formula with the parameters before the changes were applied.
+The blue bars show the formula with the actual parameters.
+
+This allows the user to see how changing one parameter of the formula impacts the prediction.
+
+<br>
+
+<!-- Mockup A End -->
+
+<!-- Mockup B Start -->
+
+<h4>Mockup B</h4>
+<p><img src="images/mockups_christoph/2Overview_explained.png" alt="MockUpB Overview" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+Mockup B is a line diagram.
+<ol>
+  <li>shows the filter for the stations. You can filter the main view by district if you click on a district. If you selected a district the dropdown menu changes. If a specific station is selected the main view also changes. </li>
+  <li> shows the filter for the time. You can change between the day, week and month view. You can also change the date for the specific view. The selection has an impact on the main view.</li>
+  <li> shows the parameter that change the formula. You can edit each parameter by the slider or the field. The changes are shown in the field. The barchart over the slider show where the formula is better or worse.</li>
+  <li> is an area of the main view. On the top of each area you can see the absliute difference between the predicted line and the real data. If you hover over the number you can see the absliute numbers for the predicted data and the real data. </li>
+  <li> is the main line diagram view.</li>
+</ol>
+</p>
+
+<p><img src="images/mockups_christoph/3District selected.png" alt="MockUpB with selected district" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+This picture shows how the map changes (#1) if a district is selected.
+</p>
+
+</br>
+</br>
+
+<!-- Mockup B End -->
+
+<!-- Mockup C Start -->
+
+<h4>Mockup C - Detailed Description</h4>
+</br>
+<b>User:</b> Matt, in charge of the logistics for CityBike Vienna. We assume he knows the stations by their number. Furthermore, we assume that he is familiar with Vienna's geography (he can orient on a map of Vienna). 
+</br>
+</br>
+<b>Task:</b> Matt needs a prediction for the amount of <b>damaged bikes </b> for <b> all </b> of the city bike stations in the <b> second </b> district for the upcoming <b> weekends </b>. </br>
+
+</br>
+
+
+Here is a step-by-step description for Matt in order to complete his task. 
+
+</br>
+</br>
+
+a. Area Selection - Districts: 
+
+<p><img src="images/areaselect_districts.png" alt="MockupC" WIDTH="70%" HEIGHT="70%"></p>
+<p></p>
+
+First, you will specify the area to which the prediction should be applied, starting with the district or districts. Clicking on a district will add this district to your list of selected districts. You may click on as many districts as you like, as long as you choose at least one. Clicking on a selected district again will delete the district from the list of selected districts.
+There is also a shortcut for selecting all districts at once. Tip: If you choose more than 12 districts, it might be faster to pre-select all of them, and then just delete the districts you don't wish to include.
+
+</br>
+</br>
+b. Area Selection - Stations: 
+
+<p><img src="images/areaselect_stations.png" alt="MockupC" WIDTH="70%" HEIGHT="70%"></p>
+<p></p>
+
+Next, you will specify the stations within the selected districts to which the prediction should be applied. You may type in the name or the number of the station. You could also zoom in into the map and click on the stations. However, for your task, it might be more useful to use the shortcut in order to select all stations.
+
+</br>
+</br>
+c. Timeslot Selection: 
+
+<p><img src="images/timeselect.png" alt="MockupC" WIDTH="70%" HEIGHT="70%"></p>
+<p></p>
+
+Here, you determine the time slot for which you want your prediction to be made. First of all, you select a starting date (From...) and an ending date (To...). Now, you can apply filters to this pre-selected timeslot. You won't have to specify months or weeks, since you want to filter for weekdays. So you can directly click on 'Days' and use the Quick Selection for weekends. That's it, you may now hit 'Predict!' (a button which pops up as soon as you have specified enough filters in order to run a predition).
+
+</br>
+</br>
+
+d. Your result:
+<p><img src="images/mapview.png" alt="MockupC" WIDTH="70%" HEIGHT="70%"></p>
+<p></p>
+
+And here is your prediction. The size of the cirlces indicates the amount of bikes, and the color specifies their state (rented, brought back, or broken). Click on the cirlces (which also show the color code) in order to change the state shown.
+
+</br>
+</br>
+
+=======
+
+<h4> Implementation details</h4>
+
+For our implementation, we will most probably be using the JavaScript D3 and/or Chart.js libraries. For the design, we might use the Bootstrap CSS Framework. These choices are however not intended to be exhaustive or final.
+
+</br>
+</br>
+
+
+<!-- Mockup C End -->
+
+
+<h4>Discussion Points</h4>
+
+<ul>
+  <li>Which Mockup do you all think is most suitable for the solution we are trying to visualize? </li>
+  <li>What else would you like to see in the tool if you were a CityBike Employee such as Matthew? </li>
+  <li>Are there other ways you would have opted to display the data? </li>
+  <li> Other Questions? </li>
+
+</ul>
+
+<h3>References:</h3>
+<p>
+<a href="http://snips.net/blog/posts/2014/01-10-fast-interactive_prototyping_with_d3_js.html" style="padding-right: 20px;">Sketch</a> </p>
+<p>
+<a href="http://framebox.org/TlJT" style="padding-right: 20px;">Framebox</a> 
+</p>
+<p>
+<a href="http://www.chartjs.org" style="padding-right: 20px;">Chart Js</a> 
+</p>
+
+
+
+
+<h3>Appendix</h3>
+
+Additional images to Mockup A:
+
+<p><img src="images/VIS_MockUp_1.png" alt="MockUp_1.1" WIDTH="70%" HEIGHT="70%"></p>
+Image displaying prediction with actuals
+
+<p><img src="images/VIS_MockUp_2.png" alt="MockUp_1.2" WIDTH="70%" HEIGHT="70%"></p>
+Image showing historic prediction vs actual data
+
+<p><img src="images/VIS_MockUp_5.png" alt="MockUp_1.5" WIDTH="70%" HEIGHT="70%"></p>
+Image displaying future prediction
+<br><br>
+Additional images to Mockup B:
+<p><img src="images/mockups_christoph/3Month.png" alt="MockUpB in month view" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+This picture shows how the main view changes when you select 'month' (#2) as a time span.
+</p>
+
+<p><img src="images/mockups_christoph/4Week.png" alt="MockUpB in week view" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+This picture shows how the main view changes when you select 'week' (#2) as a time span.
+</p>
+
+<p><img src="images/mockups_christoph/5Day.png" alt="MockUpB in day view" WIDTH="70%" HEIGHT="70%"></p>
+<p>
+This picture shows how the main view changes when you select 'day' (#2) as a time span.
+</p>
+
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

@@ -1,0 +1,91 @@
+/********************************************************/
+/* Calendar JS Cascading Style Sheets by Michael Lösler */
+/* Alle Rechte vorbehalten! (C) 2004 by Michael Lösler  */
+/* media:screen www.derletztekick.de                    */
+/********************************************************/
+
+	html, body { 
+		background-color: #ECECEC; 
+	}
+	
+	h1{ 
+		font-weight: bold; 
+		font-size: 12pt;
+		font-variant: small-caps; 
+		color: #112A5D; 
+		font-family: verdana, arial, sans-serif;
+		text-align: center;
+	}
+	
+	p, li{ 
+		font-weight: normal; 
+		font-size: 8pt; 
+		color: #0E224B; 
+		font-family: verdana, arial, sans-serif; 
+		text-align: justify; 
+	}
+	
+	a:link, a:visited, a:active{ 
+		text-decoration:none; 
+		text-transform: uppercase; 
+		font-weight: bold; 
+		color: #18466F; 
+		font-size: 8pt; 
+		letter-spacing: 1px; 
+		font-family: verdana, arial, sans-serif;
+	}
+
+	a:hover{ 
+		text-decoration:none; 
+		text-transform: uppercase; 
+		font-weight: bold; 
+		color: #1F5381; 
+		font-size: 8pt; 
+		letter-spacing: 1px; 
+		font-family: verdana, arial, sans-serif;
+	}
+	
+	#calendar {
+		text-align: center;
+	}
+		
+	#caltable{
+		border-collapse:collapse;
+		border: solid #0E224B 1px;
+		padding-left: 0px; 
+		padding-right: 0px;
+		padding-bottom: 0px; 
+		padding-top: 0px;
+		margin-left:auto;
+		margin-right:auto;
+		background-color: #DEDFE2;
+	}
+
+	#caltable th{ 
+		font-weight: bold; 
+		font-size: 9pt; 
+		color: #BFBFC1; 
+		font-family: verdana, arial, sans-serif; 
+		text-align: center;
+		height: 20px; 
+		background-color: #112A5D;
+	}
+	
+	#caltable th.select{ 
+		font-weight: normal; 
+		cursor: pointer;
+	}	
+  	
+	#caltable td{ 
+		font-weight: normal; 
+		font-size: 8pt;
+		padding-left: 5px; 
+		padding-right: 5px; 
+		color: #0E224B; 
+		font-family: verdana, arial, sans-serif; 
+		text-align: right; 
+	}
+	
+	#caltable td.days{ 
+		font-weight: bold; 
+	}

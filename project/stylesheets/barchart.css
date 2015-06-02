@@ -1,0 +1,260 @@
+
+svg {
+  /*border: 1px solid grey;*/
+  margin-left: 0px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+  float:left;
+}
+
+/* Step 5: set up the axes */
+.xaxis path,
+.xaxis line {
+  fill: none;
+  stroke: grey;
+  shape-rendering: crispEdges;
+}
+
+.yaxis path,
+.yaxis line {
+  fill: none;
+  stroke: grey;
+  shape-rendering: crispEdges;
+}
+
+.slidercontainer{
+  display: inline-block; 
+  float:left;
+}
+
+.slider-min{
+  position:absolute;
+  display: block;
+  cursor:default;
+  color:#333;
+  font-size: 12px;
+  line-height: 0;
+  margin-top: -20px;
+}
+
+.slider-max{
+  position:absolute;
+  display: block;
+  cursor:default;
+  color:#333;
+  font-size: 12px;
+  line-height: 0;
+  margin-top: -20px;
+  margin-left:285px;
+}
+
+.slidersubcontainer{
+  padding: 10px;
+}
+
+.slidersubcontainer:hover{
+  background-color: #d3d3d3;
+}
+
+.sliderlabel{
+  display: inline-block; 
+	width: 40px; 
+	text-align: left
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.table, .th, .td {
+    width: 80%;
+    border: 1px white;
+    margin-left: 50px;
+    
+}
+
+
+.table#t01 th  {
+    background-color: black;
+    color: white;
+}
+
+.table#t01.margin
+{
+margin-top:25px;
+}
+
+
+.text span {
+       background:rgba(165, 220, 79, 0.8);
+       float: left;
+       clear: left;
+       padding:7px 10px;
+       color:white;
+       margin-left: 10px;
+    }
+
+
+  .mappath {
+    stroke: red;
+    stroke-width: 0.5px;
+    fill: white;
+  }
+  .background {
+    fill: none;
+  }
+  .mappath:hover {
+    stroke: white;
+    stroke-width: 0.5px;
+    fill: red;
+    opacity: 0.3;
+  }
+  .mappath.selected {
+    stroke: white;
+    stroke-width: 0.5px;
+    fill: red;
+  }
+  .mappath.selected:hover {
+    stroke: white;
+    stroke-width: 0.5px;
+    fill: red;
+    opacity: 0.7;
+  }
+
+
+.functioncontainer{
+  padding: 20px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #bdbdbd; 
+}
+
+.functioncontainer:hover{
+  background-color: #d3d3d3;
+}
+
+.functionname{
+font-weight: bold;
+font-size: 20px;
+}
+
+.overviewcontainer{
+}
+
+.functionparameter{
+font-weight: bold;
+}
+
+.functionparametervalue{
+  margin-right: 15px;
+}
+
+.detailcontainer{
+  background: none;
+  background-color: transparent;
+}
+
+.hidden {
+  display: none;
+}
+
+.detailcontainer form {
+  background-color: transparent;
+}
+
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 0px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #007edf;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #007edf;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #007edf;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
+
+
+

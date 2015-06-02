@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+
+    <title>Line chart demo</title>
+    <link href="stylesheets/barchart.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="javascripts/function_objects.js"></script>
+    <script src="javascripts/form_creator.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vickymoser.GitHub.io : Project Website">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+<body>
+
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+		<div style="clear:both;"></div>
+	  		<select  id="newFunctionSelect">
+	    		 <option value="linear_function">Linear
+	   			 <option value="quadratic_function">Quadratisch
+	   			 <option value="gaussian_function">Gauss
+	  		</select>
+			
+		<button type="button" class="btn btn-default btn-lg"  onclick="onClicked"> 
+
+	     <span  class="glyphicon glyphicon-star" aria-hidden="true"></span> Add Function
+	    </button>
+
+
+	</br>
+
+
+
+	<div id="cont">
+		
+	</div>
+
+
+
+	<script> 
+		$( "#cont" ).append(createFunction(linearFunctionForm, "1"));
+		$( "#cont" ).append(createFunction(gaussFunctionForm, "2"));
+
+		function toggleShowDetail(event) {
+			var elem = event.target;
+
+			console.log(elem);
+			//elem.toggleClass('hidden');
+
+
+
+			$('.overviewcontainer').toggleClass('hidden');
+			$('.detailcontainer').toggleClass('hidden');
+
+
+
+
+		}
+
+	</script>
+
+
+
+
+</div>
+
+</body>
+</html>

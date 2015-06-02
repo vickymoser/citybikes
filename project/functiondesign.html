@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+
+    <title>Line chart demo</title>
+    <link href="stylesheets/barchart.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="javascripts/function_objects.js"></script>
+    <script src="javascripts/form_creator.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vickymoser.GitHub.io : Project Website">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+<body>
+
+
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+
+
+	<div class="functioncontainer" title="functionstitle" onclick ="toggleShowDetail(event)">
+		<p class="functionname">Linear Function: 
+
+		<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+	  <mrow>
+	   <mrow> <mn>kx+d</mn></mrow>
+	  </mrow>
+	</math>
+
+	</p>
+		<!-- Overview -->
+		<div class = "overviewcontainer">
+		<span class="functionparameter">Weight: </span><span class="functionparametervalue">10</span>
+		<span class="functionparameter">K: </span><span class="functionparametervalue">55</span>
+		<span class="functionparameter">D: </span><span class="functionparametervalue">136</span>
+		</div>
+		<!-- Details -->
+		<div class="detailcontainer hidden" id="hidden_div" >	
+				<p>
+
+				    <form style="padding :0px; background-color: transparent;">
+						<div>
+							<span class="functionparameter">Weight: </span><span class="functionparametervalue">impact of function in result</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<span class="slider-min" style ="position: absolute; visibility: visible;">1</span>
+							<span class="slider-max" style ="position: absolute; visibility: visible;">20</span>
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+				
+					<form style="padding :0px; background-color: transparent;">
+						<div>
+							<span class="functionparameter">K: </span><span class="functionparametervalue">slope of the line</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<span class="slider-min" style ="position: absolute; visibility: visible;">1</span>
+							<span class="slider-max" style ="position: absolute; visibility: visible;">20</span>
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+
+				    <form style="padding :0px; background-color: transparent;">
+						<div>
+							<span class="functionparameter">D: </span><span class="functionparametervalue">intercept - denotes the portion on the y axis</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<span class="slider-min" style ="position: absolute; visibility: visible;">1</span>
+							<span class="slider-max" style ="position: absolute; visibility: visible;">20</span>
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+
+
+				    
+
+				</p>
+		</div>
+	</div>
+
+
+
+
+	<div class="functioncontainer" title="Gaussian Function">
+		<p class="functionname">Gaussian Function: 
+	<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+	  <mrow>
+	  	<mi>a exp - </mi>
+	    <mfrac>
+	      <mrow>
+	      	     <msup>
+	              <mi>(x-b)</mi>
+	              <mn>2</mn>
+	            </msup>
+	      </mrow>
+	      <mrow>  
+	      	<msup>
+	              <mi>2c</mi>
+	              <mn>2</mn>
+	            </msup>
+	        </mrow>
+	    </mfrac>
+	  </mrow>
+	</math>
+
+		</p>
+		<!-- Overview -->
+		<div class = "overviewcontainer">
+			<span class="functionparameter">Weight: </span><span class="functionparametervalue">136</span>
+			<span class="functionparameter">A: </span><span class="functionparametervalue">55</span>
+			<span class="functionparameter">B: </span><span class="functionparametervalue">10</span>
+			<span class="functionparameter">C: </span><span class="functionparametervalue">136</span>
+
+		</div>
+		<!-- Details -->
+		<div class="detailcontainer hidden" id="hidden_div" >	
+				<p>
+				    <form style="padding :0px; background-color: transparent;">
+						<div>
+							<span class="functionparameter">Weight: </span><span class="functionparametervalue">impact of function in result</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+				
+
+					<form >
+						<div>
+							<span class="functionparameter">A: </span><span class="functionparametervalue">height of the curve's peak</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+
+				    <form >
+						<div>
+							<span class="functionparameter">B: </span><span class="functionparametervalue">position of the center of the peak</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+				    
+				    <form >
+						<div>
+							<span class="functionparameter">C: </span><span class="functionparametervalue">controls the width of the "bell"</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+				</p>
+		</div>
+	</div>
+
+	<div class="functioncontainer" title="Quadratic Function">
+		<p class="functionname">Quadratic Function:
+
+			<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+			  <mrow>
+			      <mrow>  
+			      	<msup>
+			             <mi>x</mi>
+			             <mn>2</mn>
+			         </msup>
+			  </mrow>
+			</math>
+		</p>
+		<!-- Overview -->
+		<div class="overviewcontainer">
+		<span class="functionparameter">Weight: </span><span class="functionparametervalue">55</span>
+		</div>
+
+
+		<!-- Details -->
+		<div class="detailcontainer" onclick ="showdetails();">	
+				<p>
+					<form >
+						<div>
+							<span>Weight: impact of function in result</span>
+							</br>
+							<input oninput="amount.value=rangeInput.value" id="slider" type="range" min="0" max="200" name="rangeInput" />
+							<input size="3" id="box" type="text" value="0" name="amount" for="rangeInput"  oninput="rangeInput.value=amount.value" />
+				    	</div>
+				    </form>
+				</p>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>	
