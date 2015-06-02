@@ -130,7 +130,7 @@ function loadData(completion) {
       }
 
       if (d == null) {
-        throw "data is null";
+        console.log("data is null");
       } else {
         data = d;
         var length = d.length;
