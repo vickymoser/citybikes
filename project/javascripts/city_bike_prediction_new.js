@@ -228,6 +228,10 @@ loadData( function() {
     if (key == 'a') {
 
       newVal =  (newVal*2);
+    }   
+    if (key == 'c') {
+
+      newVal =  (newVal*3 );
     }
     if (key == 'b') {
 
