@@ -25,7 +25,8 @@ var margin = {top: 20, right: 40, bottom: 40, left: 40},
     height = chartHeight - margin.top - margin.bottom;
 
 
-var bandWidth = 0.5;
+var bandWidth = 5;
+
 
 var xScale = d3.scale.linear() // The between-group axis
     .range([0, width]);
@@ -35,7 +36,10 @@ var yScale = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(xScale)
-    .orient("bottom");
+    .orient("bottom")
+    .tickFormat(function(d){
+      return ""+d+".01"
+    });
 
 var yAxis = d3.svg.axis()
     .scale(yScale)
@@ -161,7 +165,7 @@ loadData( function() {
   filteredData = [];
 
   for (var i = 20 - 1; i >= 0; i--) {
-    filteredData.push(new DataRow(i, Math.random()));
+    filteredData.push(new DataRow(i, 20*Math.random()));
   };
 
   chartIsReady = true;
@@ -645,8 +649,8 @@ loadData( function() {
       .attr("class", "x label")
       .attr("text-anchor", "end")
       .attr("x", width)
-      .attr("y", chartHeight - 30)
-      .text("Zeit");
+      .attr("y", chartHeight - 25)
+      .text("Tag");
 
     predictionLineFunction = generateLineForFunction(currentFunction);
 
