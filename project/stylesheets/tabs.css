@@ -3,7 +3,7 @@
 	      
 	     .tabs #tab1, #tab2, #tab3 {
 	          position: absolute;
-	          top: -9999px;
+	        /*  top: -9999px; */
 	          left: -9999px; 
 	      }
 	      .tabs {
@@ -30,7 +30,7 @@
 	          background: #DBE9FF/*rgba(255,255,255,0.2)*/;
 	          cursor: pointer;
 	          position: relative;
-	          top: 3px;
+	          top: 3px; 
 	          -webkit-transition: all 0.2s ease-in-out;
 	          -moz-transition: all 0.2s ease-in-out;
 	          -o-transition: all 0.2s ease-in-out;
@@ -38,13 +38,13 @@
 	      }
 	      .tabs label:hover {
 	        background: rgba(255,255,255,0.5);
-	        top: 0;
+	        top: 0; 
 	      }
 	      
 	      [id^=tab]:checked + label {
 	        background: #CCE0FF/*#08C*/;
 	        color: #333333; 
-	        top: 0;
+	        top: 0; 
 	      }
 	      
 	      [id^=tab]:checked ~ [id^=tab-content] {
@@ -55,6 +55,7 @@
 	        display: none;
 	        text-align: left;
 	        width: 100%;
+	        height: 400px;
 	        /*font-size: 20px;
 	        line-height: 140%;*/
 	        padding-top: 10px;

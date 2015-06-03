@@ -50,19 +50,22 @@
 
 <p>CityBike employees can adjust the prediction line by adjusting certain parameters which in our case are mathematical functions. Users can add new functions allowing them to recreate the desired prediction curve.</p> 
 
-
-<h3 style="color:blue;">Images showing your current visualization design</h3>
-
-
-
-
-<h3>Any changes to the original visualization design or work plan</h3>
-
+<h3>Changes to the original visualization design</h3>
+<ul>
+<li>due to feedback we took different aspects of our 3 Mockups which now add up to our final design</li>
+<li>The line showing the actual data now also displays the standard deviation</li>
+<li>our parameters for editing the prediction line are mathemathical functions which you can add and edit</li>
+</ul>
 
 <h3>Progress so far</h3>
-So far we have been able to accomplish the following:
+
+<p>Our major focus has been on the graph and deciding how best to let the user "play" with our tool to edit the prediction line however he/she likes. We decided on using mathematical functions as our parameter for this and the user can then utilize sliders to change the weight of each element of a function. (linear function = KX+D - the user can change the range value for both K & D).
+</p>
+
+Implementation Details:
 <ul>
   <li> D3 Map of Vienna as district filter</li>
+  <li> layout for stations filter</li>
   <li> filter for timeframe</li>
   <li> see "actual" line with standard deviation</li>
   <li> dynamically create functions</li>
@@ -72,19 +75,30 @@ So far we have been able to accomplish the following:
 
 Ongoing:
 <ul>
-  <li> save current views</li>
-  <li> delete views</li>
+  <li> work on views (edit/delete)</li>
+  <li> tool tips & legend for graph</li>
   <li> better solution for station selection</li>
+  <li> slider for standard deviation</li>
 </ul>
+
+<p><img src="images/m3_1.png" alt="M3_1" WIDTH="70%" HEIGHT="70%"></p>
+The first section of our tool allows the user to define the filter options based on district, station and timeframe. 
+
+<p><img src="images/m3_2.png" alt="M3_1" WIDTH="70%" HEIGHT="70%"></p>
+Once the selection has been made the tool shows the "actual line" for the selected timeframe and the prediction line. One the right side of the graph users now have the chance to play with the prediction line adding and editing values for mathematical functions. This allows them to move and bend the prediction line-
+
 
 <h3>Current major challenges or problems</h3>
 Christoph
 
 <p>One of our challenges is deciding on how to handle the selection of Stations as there is such a huge volume and can easily be overwhelming.</p> 
-<h3>Presentation of your hi-fidelity prototype</h3>
-
 
 <h3>Questions or discussion points</h3> 
+<ul>
+  <li> Is the tool intuitive enough?</li>
+  <li> What do you think of the design?</li>
+  <li> What would you have done different?</li>
+</ul>
 
 
 

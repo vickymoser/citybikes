@@ -14,6 +14,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
 
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="javascripts/checkboxes.js"></script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Vickymoser.GitHub.io : Project Website">
@@ -74,42 +76,46 @@
 			            <div id="BEZWI" style="">
 				<table border="0px">
 				<tr>
-					<td colspan="4"><input type="checkbox" name="" value="WIEN" > all districts</td>
+					<td colspan="4"><input type="checkbox" name="" value="WIEN" onClick="checkAllWien(this)"> all districts</td>
+				</tr>
+				
+				<tr>			            <td><div style= "height:15px;"></div></td>
+				</tr>
+				
+				<tr>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" > 1010</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"> 1020</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1030" id="w3"> 1030</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1040" id="w4"> 1040</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1010" id="w1" > 1010</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1020" id="w2"> 1020</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1030" id="w3"> 1030</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1040" id="w4"> 1040</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1050" id="w5"> 1050</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1060" id="w6"> 1060</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1070" id="w7"> 1070</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1080" id="w8"> 1080</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1050" id="w5"> 1050</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1060" id="w6"> 1060</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1070" id="w7"> 1070</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1080" id="w8"> 1080</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1090" id="w9"> 1090</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1100" id="w10"> 1100</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1110" id="w11"> 1110</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1120" id="w12"> 1120</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1090" id="w9"> 1090</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1100" id="w10"> 1100</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1110" id="w11"> 1110</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1120" id="w12"> 1120</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1130" id="w13"> 1130</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1140" id="w14"> 1140</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1150" id="w15"> 1150</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1160" id="w16"> 1160</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1130" id="w13"> 1130</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1140" id="w14"> 1140</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1150" id="w15"> 1150</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1160" id="w16"> 1160</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1170" id="w17"> 1170</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1180" id="w18"> 1180</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1190" id="w19"> 1190</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1200" id="w20"> 1200</td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1170" id="w17"> 1170</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1180" id="w18"> 1180</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1190" id="w19"> 1190</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1200" id="w20"> 1200</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1210" id="w21"> 1210</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1220" id="w22"> 1220</td>
-					<td><input type="checkbox" class="districtcheckbox" name="" value="w1230" id="w23"> 1230</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1210" id="w21"> 1210</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1220" id="w22"> 1220</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1230" id="w23"> 1230</td>
 					<td>&nbsp;</td>
 				</tr>
 				
@@ -118,7 +124,7 @@
 			</table>
 		</div>
 		
-		<div style="padding: 20px;"> Selected Districts: </div>
+	<!--	<div style="padding: 20px;"> Selected Districts: </div> -->
 			            
 			            
 			          </div>
@@ -134,17 +140,60 @@
 			            
 			            <table>
 			            
+			            <div style= "width:500px;"></div>
+			            
+
+
+				<table border="0px" style="">
+				<tr>
+					<td colspan="4"><input type="checkbox" name="" value="WIEN" onClick="checkAllStations(this)"> all stations within selected district(s)</td>
+				</tr>
+				<tr>			            <td><div style= "height:15px;"></div></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1010" id="s1" > 0001</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1020" id="s2"> 0002</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1030" id="s3"> 0003</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1040" id="s4"> 0004</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1050" id="s5"> 0005</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1060" id="s6"> 0006</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1070" id="s7"> 0007</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1080" id="s8"> 0008</td>
+				</tr>
+				
+				
+				
+				<tr>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1210" id="s21"> 0009</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1220" id="s22"> 0010</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1230" id="s23"> 0011</td>
+					<td>&nbsp;</td>
+				</tr>
+				
+				<!--<tr> <td style="margin: 30px;">Selected Stations: </td><td> </tr></tr>-->
+				
+			</table>
+				
+				
+				
+				
+			            <tr style = "padding: 50px 20px 0px 50px;">
+			            <div style = "padding: 50px 20px 0px 50px;"></div>
+			            </tr>
+			            
 			            <tr>
 			            
-			            <td style = "padding: 20px 20px 0px 20px;">
+			            <td style = "padding: 50px 20px 0px 50px;">
 			            
-			            Type in the name of the station(s) you want to include: <input type="text" size="12" id="inputFieldStations" />
+			            &nbsp;Or type in the name of the station(s) you want to include: <input type="text" size="12" id="inputFieldStations" />
 			           
 			            </td>
 			           
 			            </tr>
 			            
-			            <tr>
+			         <!--   <tr>
 			            
 			            <td style= "padding: 20px 20px 0px 20px;">
 			            
@@ -162,7 +211,7 @@
 			            
 			            </td>
 			            
-			            </tr>
+			            </tr> -->
 			            
 			            </table>
 			            
@@ -212,7 +261,7 @@
 		
 							<input type="text" size="12" id="inputFieldFrom" />
 							</td>
-							<td  style="padding: 20px;">
+							<td  style="padding: 20px 20px 20px 100px;">
 							
 						<input type="radio" name="weekdays" value="weekdays" > Next Week
 						<input type="radio" name="weekdays" value="weekdays" checked> Next Month
@@ -222,7 +271,8 @@
 							 <input type="text" size="12" id="inputFieldTo" />  -->
 						</td>
 						</tr>     
-							 
+						
+						<!--	 
 						<tr>
 						<td  style="padding: 20px 20px 0px 20px;">
 						Select Day type:
@@ -234,7 +284,7 @@
 						<input type="checkbox" name="weekdays" value="weekdays" checked> Weekdays
 						<input type="checkbox" name="weekend" value="weekends"> Weekends
 						</td>
-						</tr>
+						</tr> -->
 
 
 									   
@@ -296,15 +346,16 @@
 
 var bikeChart = cityBikeChart("#chart","#chartcontainer");
 
-
 var mapsSelect = mapSelection("#mapview","mapviewresults").
 on("select", function(id) {
   console.log("didSelectCallBack"+mapsSelect.selectedDistricts());
   document.getElementById("w"+id).checked = true;
+ // addCheck();
 }).
 on("unselect",function(id) {
   console.log("didUnSelectCallBack"+mapsSelect.selectedDistricts());
   document.getElementById("w"+id).checked = false;
+ // removeCheck();
 });
 
 $(".districtcheckbox").change(function() {
@@ -493,6 +544,7 @@ $(".districtcheckbox").change(function() {
 
 <!-- table-->
 <table id="t01", class="table", cellpadding="2", >
+  <tr style = "height:50px"></tr>
   <tr>
     <th>#</th>
     <th>View</th> 
