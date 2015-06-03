@@ -52,9 +52,9 @@ var str ="<div class=\"functioncontainer\" id=\"functioncontainer_"+identifier+"
 
 					str +=  "<form style=\"padding :0px; background-color: transparent;\">"+
 						"<div>"+
-							"<span class=\"functionparameter\">"+param.name+": </span><span class=\"functionparametervalue\">"+param.description+"</span>"+
+							"<span class=\"functionparameter\">"+param.name+": </span><span class=\"functionparametervalue\">"+param.decription+"</span>"+
 							"</br>"+
-							"<input oninput=\"amount.value=rangeInput.value;slOnValueChanged(event);\" id=\"slider_"+param.key+"_"+identifier+"\" type=\"range\" min=\"0\" max=\"200\" name=\"rangeInput\" onMouseDown=\"slOnMouseDown(event)\" onMouseUp=\"slOnMouseUp(event)\"/>"+
+							"<input oninput=\"amount.value=rangeInput.value;slOnValueChanged(event);\" id=\"slider_"+param.key+"_"+identifier+"\" type=\"range\" min=\"0\" max=\"100\" name=\"rangeInput\" onMouseDown=\"slOnMouseDown(event)\" onMouseUp=\"slOnMouseUp(event)\"/>"+
 							"<input size=\"3\" id=\"box\" type=\"text\" value=\"0\" name=\"amount\" for=\"rangeInput\"  oninput=\"rangeInput.value=amount.value\" />"+
 				    	"</div>"+
 				    "</form>";
@@ -103,7 +103,7 @@ var str ="<div class=\"functioncontainer\" id=\"functioncontainer_"+identifier+"
 
 		var key = comps[1];
 		var index = +comps[2];
-		var val = +t.value / 100;
+		var val = +t.value;
 
         bikeChart.updateFunctionValue(index,key, val );
 

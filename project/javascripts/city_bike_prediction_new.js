@@ -223,13 +223,16 @@ loadData( function() {
 
     var newVal = value/100;
 
+
+
     if (key == 'b') {
-      newVal*=filteredData.length;
-    } 
+
+      newVal =  (newVal*filteredData.length);
+    }
 
 
 
-    f.setValueForKey(key, value);
+    f.setValueForKey(key, newVal);
   }
 
 
@@ -481,6 +484,12 @@ loadData( function() {
     var minYValue = 0,
         maxYValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionY(d); });
 
+        var actualmaxYValue = d3.max(filteredData, function(d) {return d.y; });
+
+        maxYValue = Math.max(actualmaxYValue,maxYValue);
+
+
+
     var minXValue = d3.min(filteredData, function(d) {return currentFunction.lineFunctionX(d);}),
         maxXValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionX(d);});
 
@@ -508,10 +517,18 @@ loadData( function() {
     })
     .interpolate('basis');
 
-    chart.select('.actualline')
-      .attr('d', actualLineFunction(filteredData));
 
-    actualLineBand = d3.svg.area()
+    var selection = d3.select('.actualline');
+
+    if (animated) {
+      selection = selection.transition(200);
+    }
+
+    selection.attr('d', actualLineFunction(filteredData));
+
+
+
+    var actualLineBand = d3.svg.area()
     .x(function(d) {
       return xScale(d.x);
     })
@@ -523,8 +540,13 @@ loadData( function() {
     })
     .interpolate('basis');
 
-    chart.select('.band')
-      .attr('d', actualLineBand(filteredData));
+    selection = d3.select('.band');
+
+    if (animated) {
+      selection = selection.transition(200);
+    }
+
+    selection.attr('d', actualLineBand(filteredData));
 
 
   }
@@ -615,13 +637,7 @@ loadData( function() {
     predictionLineFunction = generateLineForFunction(currentFunction);
 
 
-    chart.append('svg:path')
-      .attr('class','line')
-      .attr('d', predictionLineFunction(filteredData))
-      .attr('stroke', 'red')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none');
-
+    
 
     actualLineFunction = d3.svg.line()
     .x(function(d) {
@@ -662,6 +678,14 @@ loadData( function() {
       .attr('fill', 'none');
 
     //Actual Line Margin
+
+    chart.append('svg:path')
+      .attr('class','line')
+      .attr('d', predictionLineFunction(filteredData))
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+
 
 
     if (valueTransitionInProgress) {
