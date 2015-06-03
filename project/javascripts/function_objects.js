@@ -142,7 +142,7 @@ ComposedFunction.prototype = {
 			val += this.functions[i].lineFunctionY(datarow);
 		};
 
-		return val / this.functions.length;
+		return val;// / this.functions.length;
 	},
     removeFunction:function (f)  {
 		var i = array.indexOf(f);

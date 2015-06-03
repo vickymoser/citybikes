@@ -20,7 +20,7 @@ var containerId = containerId;
 var chartWidth = 800,
     chartHeight = 400;
 
-var margin = {top: 20, right: 40, bottom: 30, left: 40},
+var margin = {top: 20, right: 40, bottom: 40, left: 40},
     width = chartWidth - margin.left - margin.right,
     height = chartHeight - margin.top - margin.bottom;
 
@@ -462,10 +462,8 @@ loadData( function() {
       console.log("resize");
     if (containerId == null) {return;}
 
-      console.log("resize");
-      var margin = {top: 30, right: 10, bottom: 30, left: 10}
 
-      chartWidth = parseInt(d3.select(containerId).style('width'), 10);
+    chartWidth = parseInt(d3.select(containerId).style('width'), 10);
        width = chartWidth - margin.left - margin.right;
 
 
@@ -642,6 +640,13 @@ loadData( function() {
     chart.append("g")
          .attr("class", "yaxis")
          .call(yAxis);
+
+    chart.append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", width)
+      .attr("y", chartHeight - 30)
+      .text("Zeit");
 
     predictionLineFunction = generateLineForFunction(currentFunction);
 
