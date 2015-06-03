@@ -225,10 +225,15 @@ loadData( function() {
 
 
 
+    if (key == 'a') {
+
+      newVal =  (newVal*2);
+    }
     if (key == 'b') {
 
       newVal =  (newVal*filteredData.length);
     }
+
 
 
 
