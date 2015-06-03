@@ -86,7 +86,7 @@ LinearFunction.prototype = {
     	return false;
     },
     lineFunctionY :function(datarow) {
-		return this.weight* (this.k*datarow.x +this.d);
+		return 20*this.weight* (this.k*datarow.x +this.d);
 	},
     lineFunctionX :function(datarow) {
 		return datarow.x;
@@ -142,7 +142,7 @@ ComposedFunction.prototype = {
 			val += this.functions[i].lineFunctionY(datarow);
 		};
 
-		return 20*val;// / this.functions.length;
+		return val;// / this.functions.length;
 	},
     removeFunction:function (f)  {
 		var i = array.indexOf(f);
@@ -249,7 +249,7 @@ GaussianFunction.prototype = {
 
 		var innerValue = - helper/(2*helper2);
 
-		return this.weight * this.a * Math.exp(innerValue);
+		return 20*this.weight * this.a * Math.exp(innerValue);
 	},
     toString:function ()  {
         return "GaussianFunction" ;

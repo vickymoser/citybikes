@@ -237,6 +237,10 @@ loadData( function() {
 
       newVal =  (newVal*3 );
     }
+    if (key == 'd') {
+
+      newVal =  (newVal*20 );
+    }
     if (key == 'b') {
 
       newVal =  (newVal*filteredData.length);
