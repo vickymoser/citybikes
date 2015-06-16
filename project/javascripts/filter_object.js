@@ -83,11 +83,13 @@ ComposedFilterFunction.prototype = {
 function FilterTime( /*timeForFilter, timeFrame*/ ) {
     AbstractFilterFunction.call(this);
 
-    this.timeForFilter = null;
-    this.timeFrame = null;
+    this.timeForFilterStart = null;
+    this.timeForFilterEnd = null;
     this.graph = [];
     this.numbersInPeriod = 0;
     this.timePeriodToCheck = 1;
+    this.done = null;
+    this.isDay = null;
     //this.daysInMonth = 0;
     //this.changeTime( timeForFilter, timeFrame);
 }
@@ -105,23 +107,28 @@ FilterTime.prototype = {
         changes the time frame
      */
     type : "FilterTime",
-    timeFrameEnum : {
-        DAY : 0,
-        WEEK : 1,
-        MONTH : 2
-    },
-    changeTime : function(timeForFilter, timeFrame ) {
-        this.timeForFilter = this.parseTimeShort(timeForFilter);
-        if(timeFrame == this.timeFrameEnum.DAY || timeFrame == this.timeFrameEnum.WEEK || timeFrame == this.timeFrameEnum.MONTH) {
-            this.timeFrame = timeFrame;
+    changeTime : function(timeForFilterStart, timeForFilterEnd ) {
+        this.timeForFilterStart = this.parseTimeShort(timeForFilterStart);
+        this.timeForFilterEnd = this.parseTimeShort(timeForFilterEnd);
+        //new Date(year, month, 0).getDate();
+        if( this.timeForFilterStart.getMonth() == this.timeForFilterEnd.getMonth() && this.timeForFilterStart.getDate() == this.timeForFilterEnd.getDate() ){
+            this.isDay = true;
         } else {
-            throw "timeFrame false: " + timeFrame;
+            this.isDay = false;
         }
         //this.daysInMonth = new Date(this.timeForFilter.getYear(),this.timeForFilter.getMonth(),0).getDate();
-        console.log("Day= " + this.timeForFilter.getDate() + "Month= " + this.timeForFilter.getMonth() );
+        console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
+        console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
+        console.log("daysInMonth= " + new Date( this.timeForFilterStart.getYear(), this.timeForFilterStart.getMonth(),0).getDate() );
         this.numbersInPeriod = 0;
-        this.timePeriodToCheck = 1;
+        if( this.isDay ) {
+            this.timePeriodToCheck = 0;
+        } else {
+            this.timePeriodToCheck = 1;
+        }
+
         this.graph = [];
+        this.done = false;
     },
 
     /*
@@ -166,41 +173,66 @@ FilterTime.prototype = {
                 false
      */
     includeLine: function( line ) {
-        if( this.timePeriodToCheck > 31) {
+        if( this.done ) {
             return false;
         }
         var timeName = "entlehnzeitpunkt";
         var timeToCheck = line[timeName];
-        if( this.timeFrame == this.timeFrameEnum.MONTH ) { //if time under the month
-            if(timeToCheck.getMonth() < this.timeForFilter.getMonth()){ //if filter is set for Month
-                return false;
-            } else {
+        if( this.isDay ) { //if time under the month
+            if( timeToCheck.getMonth() == this.timeForFilterStart.getMonth() && timeToCheck.getDay() == this.timeForFilterStart.getDay() ) {
                 if( this.timePeriodToCheck == timeToCheck.getDate() ) { //if the day you are looking at
                     this.numbersInPeriod ++;
                     return true;
                 } else {
-                    if( this.timePeriodToCheck > timeToCheck.getDate() ) { //if you passed the month
+                    if( this.timePeriodToCheck != timeToCheck.getDate() ) {
                         this.graph.push( this.numbersInPeriod );
-                        this.timePeriodToCheck = 32; // now returns always false
-                        return false;
+                        this.timePeriodToCheck = timeToCheck.getDate();
+                        this.numbersInPeriod = 1;
+                        return true;
                     } else {
                         this.timePeriodToCheck++;
+                        return true;
+                    }
+                }
+            } else {
+                var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
+                if ( newTimeToCheck.parse() > this.timeForFilterStart.parse() ) {
+                    this.done = true;
+                }
+            }
+        } else {
+            var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
+            if( newTimeToCheck.parse() < this.timeForFilterStart.parse() ){ //if filter is set for Month
+                return false;
+            } else {
+                if( newTimeToCheck.parse() > this.timeForFilterStart.parse() ) {
+                    this.done = true;
+                    this.graph.push( this.numbersInPeriod )
+                    return false;
+                } else {
+                    if( this.timePeriodToCheck == timeToCheck.getDate() ) { //if the day you are looking at
+                        this.numbersInPeriod ++;
+                        return true;
+                    } else {
                         this.graph.push( this.numbersInPeriod );
+                        this.timePeriodToCheck = timeToCheck.getDate();
                         this.numbersInPeriod = 1;
                         return true;
                     }
                 }
             }
-        } else if(this.timeFrame == this.timeFrameEnum.WEEK){
-
-        } else if(this.timeFrame == this.timeFrameEnum.DAY){
-
         }
     },
     getGraph : function() {
         this.numbersInPeriod = 0;
-        this.timePeriodToCheck = 1;
-        return this.graph;
+        if( this.isDay ) {
+            this.timePeriodToCheck = 0;
+        } else {
+            this.timePeriodToCheck = 1;
+        }
+        var returnGraph = this.graph;
+        this.graph = [];
+        return returnGraph;
     }
 
 };

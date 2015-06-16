@@ -1,0 +1,8 @@
+*.name
+.idea/citybikes.iml
+.idea/workspace.xml
+.idea/misc.xml
+images/m3_1.png
+.idea/modules.xml
+.idea/vcs.xml
+project/data/fahrten_2012.csv
