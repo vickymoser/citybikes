@@ -48,6 +48,10 @@ var yAxis = d3.svg.axis()
 var data;
 var filteredData = [];
 
+var filteredStationData;
+
+var averageData;
+
 var chartIsReady = false;
  
  
@@ -107,7 +111,11 @@ function parseCitbikeData(d) {
   var second = parseInt( bufferString2[2].split(".")[0] );
 
 
+
+
   return{
+
+
 
     //fahrtnummer : +d.Fahrtnummer,
     entlehnstation : +d.Entlehnstation,
@@ -222,6 +230,18 @@ loadData( function() {
     return my;
   }
 
+  my.bandWidth = function(value) {
+    if (!arguments.length) {
+      return onReadyCallback;
+    }
+
+    bandWidth = value;
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
   my.updateFunctionValue = function(index, key, value) {
     var f = currentFunction.getFunction(index);
 
@@ -237,6 +257,10 @@ loadData( function() {
 
       newVal =  (newVal*3 );
     }
+    if (key == 'k') {
+      newVal -=0.5;
+      newVal *= 5;
+    }
     if (key == 'd') {
 
       newVal =  (newVal*20 );
@@ -246,9 +270,6 @@ loadData( function() {
       newVal =  (newVal*filteredData.length);
     }
 
-
-
-
     f.setValueForKey(key, newVal);
   }
 
@@ -257,7 +278,6 @@ loadData( function() {
 
   //Sets the selected Districts 
   //Calling this method also redraws the map to show the new selection
-
 
     var funcKey = "hover"+index;
 
@@ -320,10 +340,11 @@ loadData( function() {
 
   }
 
-    my.addHoverFunctionForKey = function(index) {
+  my.addHoverFunctionForKey = function(index) {
+    addHoverFunctionForKey(index);
+  }
 
-      addHoverFunctionForKey(index);
-    }
+
 
   //Adds the passed values to the selected Districts if tey are not already present
   //Calling this method also redraws the map to show the new selection
@@ -737,12 +758,10 @@ loadData( function() {
       .attr('stroke', 'blue')
       .attr('stroke-width', 2)
       .attr('fill', 'grey');
-
     }
   }
 
-
-
+  resize();
   //TODO: Update Filter 
 
   //
