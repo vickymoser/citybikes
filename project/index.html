@@ -46,6 +46,7 @@
 <a href="../m1.html" style="padding-right: 20px;">M1</a> 
 <a href="../m2.html" style="padding-right: 20px;">M2</a> 
 <a href="../m3.html" style="padding-right: 20px;">M3</a> 
+<a href="..m4.html" style="padding-right: 20px;">M4</a> 
 <a href="project/index.html" style="padding-right: 20px;">Project</a> 
 </h3>
 
@@ -83,7 +84,7 @@
 				</tr>
 				
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" > 1010</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" onClick="" > 1010</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"> 1020</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1030" id="w3"> 1030</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1040" id="w4"> 1040</td>
@@ -358,18 +359,24 @@ on("unselect",function(id) {
  // removeCheck();
 });
 
+
 $(".districtcheckbox").change(function() {
 	var id = this.id;
 
 	var distictNumber = + id.replace("w","");
 
     if(this.checked) {
-    	mapsSelect.selectDistricts([distictNumber]);
+    	
+    	mapsSelect.selectDistrict([distictNumber]);
+    	
+
     } else {
 
     	mapsSelect.unselectDistricts([distictNumber]);
     }
 });
+
+
 
 
 //mapsSelect.selectDistricts([1,2,3,4,5,22,13]);
