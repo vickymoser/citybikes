@@ -45,9 +45,14 @@ var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
 
-var data;
-var filteredData = [];
-var locationData = [];
+var dataGraph;
+var filteredData;
+var locationData;
+  var dateStart = "4.5.2012"; // input real data
+  var dateEnd = "4.5.2012"; // input real data
+  var includedStations = [1128,1027,1030]; // input real data
+  var currentFilter;
+
 
 var filteredStationData;
 
@@ -139,7 +144,7 @@ function parseCitbikeData(d) {
     //rueckgabestation : +d.Rueckgabestation,
     //rueckgabezeitpunkt : timeParseHelper.parseTimeLong( d.Rueckgabezeitpunkt ), //use function
     //zweck : d.Zweck,
-    land : d.Land
+    //land : d.Land //wurde ausgeklammert
     //touristcard : touristencardComp // 0 = nein, 1 = ja*/
 
   };
@@ -160,20 +165,33 @@ function loadData(completion) {
       if (d == null) {
         console.log("data is null");
       } else {
-        data = d;
+        var currentFilter = new ComposedFilterFunction(dateStart,dateEnd,includedStations);
+
         var length = d.length;
-        /*var timeParseHelper = new FilterTime();
-        timeParseHelper.changeTime('1.4.2012');
-        var composedFilterFunction = new ComposedFilterFunction();
-        composedFilterFunction.addFilter(timeParseHelper);*/
         console.log("getting graph");
-        var currentFilter = new ComposedFilterFunction("4.1.2012","4.1.2012",[1033,1065,1061]);
+
         for (var i = 0; i < length; i++) {
           currentFilter.includeLine( d[i] ) ;
         }
-        //console.log(loop);
-        console.log(currentFilter.getGraph());
 
+        dataGraph = currentFilter.getGraph();
+        console.log( dataGraph );
+
+        var lengthDataGraph = dataGraph.length;
+        var numberOfSelectedStations = currentFilter.getNumbOfStations();
+        filteredData = [];
+        var toPush;
+
+        for( var i = 0; i < lengthDataGraph; ++i ) {
+          toPush = 0;
+
+          for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            if( dataGraph[i][j] != undefined ) toPush += dataGraph[i][j];
+          }
+          toPush /= numberOfSelectedStations;
+          filteredData.push(new DataRow(i,toPush));
+        }
+        console.log(filteredData);
       }
       
         completion();
@@ -187,11 +205,14 @@ loadData( function() {
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 10, 2));
 
   // Generate Some Dummy Data
-  filteredData = [];
+  //filteredData = [];
 
-  for (var i = 20 - 1; i >= 0; i--) {
+  //random data
+  /*for (var i = 20 - 1; i >= 0; i--) {
     filteredData.push(new DataRow(i, 20*Math.random()));
   };
+  console.log( filteredData );
+*/
 
   chartIsReady = true;
   if (onReadyCallback != null) {
