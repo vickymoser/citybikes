@@ -8,16 +8,18 @@
 	      }
 	      .tabs {
 	        width: 800px;
-	        height: 500px;
+	        height: 100%;
 	        float: none;
 	        list-style: none;
 	        position: relative;
 	        padding: 0;
 	        margin: 50px;
 	        margin-top: 0px;
+
 	      }
 	      .tabs li.tabli{
 	        float: left;
+	        overflow:auto;
 	      }
 	      .tabs label.tabli {
 	          display: block;
@@ -35,6 +37,7 @@
 	          -moz-transition: all 0.2s ease-in-out;
 	          -o-transition: all 0.2s ease-in-out;
 	          transition: all 0.2s ease-in-out;
+	          
 	      }
 	      .tabs label.tabli:hover {
 	        background: rgba(255,255,255,0.5);
@@ -55,11 +58,12 @@
 	        display: none;
 	        text-align: left;
 	        width: 100%;
-	        height: 400px;
-	        /*font-size: 20px;
-	        line-height: 140%;*/
+	        height: 100%;
+	        /*font-size: 20px;*/
+	        line-height: 140%;
 	        padding-top: 10px;
 	        background: #CCE0FF/*#08C*/;
+	       	/*background-size: 100%;*/
 	        padding: 15px;
 	        margin: 0px;
 	        /*color: white;*/
@@ -71,9 +75,11 @@
 	        -o-animation-duration: 0.5s;
 	        -moz-animation-duration: 0.5s;
 	        animation-duration: 0.5s;
+	        	        overflow:auto;
 	      }
 	    
 	    li.stations {display: inline-block;
    /* margin: 5px;*/
     /*padding: 10px;*/
-    vertical-align:top;}
+    vertical-align:top;
+    }
