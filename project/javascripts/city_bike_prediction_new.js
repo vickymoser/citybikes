@@ -703,6 +703,15 @@ loadData( function() {
 
     selection.attr('d', actualLineBand(filteredData));
 
+    var xValue = function(d) { return xScale(d.x);}; // data -> value
+
+    // setup y
+    var yValue = function(d) { return yScale(d.y);}; // data -> value
+
+    chart.selectAll(".dot")
+    .attr("cx", xValue)
+    .attr("cy", yValue);
+
 
   }
 
@@ -765,6 +774,10 @@ loadData( function() {
     if (!chartIsReady) {return;};
 
 
+    var xValue = function(d) { return xScale(d.x);}; // data -> value
+
+    // setup y
+    var yValue = function(d) { return yScale(d.y);}; // data -> value
 
     // Compute the extents of the data
     var minYValue = 0,
@@ -774,8 +787,13 @@ loadData( function() {
         maxXValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionX(d);});
 
     var actualmaxYValue = d3.max(filteredData, function(d) {return d.y; });
+    var actualmaxYValueScatterPlot = d3.max(scatterPlotData, function(d) {return d.y; });
 
         maxYValue = Math.max(actualmaxYValue,maxYValue);
+
+
+        maxYValue = Math.max(actualmaxYValueScatterPlot,maxYValue);
+
 
 
     // Step 4: add scales
@@ -883,6 +901,33 @@ loadData( function() {
       .attr('stroke-width', 2)
       .attr('fill', 'grey');
     }
+
+
+
+
+
+
+    chart.selectAll(".dot").data(scatterPlotData).enter().append("circle")
+    .attr("class", "dot")
+    .attr("r", 3.5)
+    .attr("cx", xValue)
+    .attr("cy", yValue)
+    .style("fill", "#2c7fb8")
+    .on("mouseover", function(d) {
+    tooltip.transition()
+    .duration(200)
+    .style("opacity", .9);
+    tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
+    .style("left", (d3.event.pageX + 5) + "px")
+    .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+    tooltip.transition()
+    .duration(500)
+    .style("opacity", 0);
+    });
+
+
   }
 
   resize();
