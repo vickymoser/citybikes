@@ -210,7 +210,7 @@ function parseCitbikeData(d) {
 
 function loadData(completion) {
 
-    var fileFahrtenPath = "http://wwwlab.cs.univie.ac.at/~a1201759/SimplePush/fahrten_2012.csv";
+    var fileFahrtenPath = "data/fahrten_2012.csv";
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
 
