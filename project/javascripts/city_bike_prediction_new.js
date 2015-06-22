@@ -7,8 +7,12 @@
 */
 /*
 TOADD function:
+
+
  http://bl.ocks.org/weiglemc/6185069
  Note:
+
+
  var xValue = function(d) { return d.x;}, // data -> value
  xScale = d3.scale.linear().range([0, width]), // value -> display
  xMap = function(d) { return xScale(xValue(d));}, // data -> display
@@ -43,6 +47,9 @@ TOADD function:
  .duration(500)
  .style("opacity", 0);
  });
+
+
+
  */
 
 //Creates a MapView and renders it into th element with the specified id
@@ -203,7 +210,7 @@ function parseCitbikeData(d) {
 
 function loadData(completion) {
 
-    var fileFahrtenPath = "data/fahrten_2012.csv";
+    var fileFahrtenPath = "http://wwwlab.cs.univie.ac.at/~a1201759/SimplePush/fahrten_2012.csv";
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
 
@@ -341,15 +348,17 @@ loadData( function() {
 
   my.bandWidth = function(value) {
     if (!arguments.length) {
-      return onReadyCallback;
+      return bandWidth;
     }
 
     bandWidth = value;
+    boundAreadNumb = bandWidth/2;
 
     if (chartIsReady) {
       redraw();
     }
   }
+
 
   my.updateFunctionValue = function(index, key, value) {
     var f = currentFunction.getFunction(index);
@@ -544,8 +553,6 @@ loadData( function() {
     oldFunction = null;
 
     chart.select('.phantomline').remove();
-
-
 
     redraw(true);
     //TODO: Remove phantom function 
