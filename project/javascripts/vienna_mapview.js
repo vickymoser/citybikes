@@ -17,6 +17,8 @@ var height = 350 - margin.top - margin.bottom;
 //Initialize selected districts
 var selectedDistricts = [];
 
+var allDistricts = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+
 var projection = d3.geo.mercator().scale(1);
 var svg = d3.select(mapViewId).append("svg").attr("width", width).attr("height", height);
     svg.append("rect").attr("class", "background").attr("width", width).attr("height", height);
@@ -67,8 +69,18 @@ d3.json("geo/wien.json", function(temp) {
 
     selectedDistricts = value;
 
-    show();
+    redraw();
     return my;
+  };
+
+    my.allDistricts = function() {
+
+      var r = [];
+
+      for (var i = 1; i <= 23; i++) {
+        r.push(i);
+      };
+      return r;
   };
 
   //Adds the passed values to the selected Districts if tey are not already present
@@ -88,7 +100,7 @@ d3.json("geo/wien.json", function(temp) {
 
     };
 
-    show();
+    redraw();
     return my;
   }
   //Removed the passed values to the selected Districts if tey are present
@@ -105,7 +117,7 @@ d3.json("geo/wien.json", function(temp) {
       }
     };
 
-    show();
+    redraw();
     return my;
   }
 
@@ -132,7 +144,7 @@ function selectDistrict(value) {
     if(i == -1) {
       selectedDistricts.push(+value);
     }
-
+    redraw();
     return my;
 }
 
@@ -142,9 +154,29 @@ function unselectDistrict(value) {
     if(i != -1) {
       selectedDistricts.splice(i, 1);
     }
-
+redraw();
     return my;
   }
+
+function redraw() {
+  g.selectAll("path")
+  .attr("class", function(d) {
+      var cl ="mappath";
+
+      var beznr = +d.properties.BEZNR;
+
+
+      var i = selectedDistricts.indexOf(beznr);
+
+      if (i != -1) {
+        cl += " selected";
+      } 
+
+
+      return cl;
+
+    });
+}
 
 //Draws the MapView
 //Shows Current Selection in the Mapview
@@ -158,6 +190,8 @@ s = .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
 sorg = s;
 projection.scale(s).center([(box[0][0]+box[1][0])/2,(box[0][1]+box[1][1])/2]).translate([width/2,height/2]);
 
+
+
 g.append("g").selectAll("path").data(wien.features).enter().append("path").attr('d', path).attr("id",function(d){return d.properties.BEZNR;}).
     attr("class", function(d) {
       var cl ="mappath";
@@ -168,7 +202,6 @@ g.append("g").selectAll("path").data(wien.features).enter().append("path").attr(
       var i = selectedDistricts.indexOf(beznr);
 
       if (i != -1) {
-
         cl += " selected";
       } 
 

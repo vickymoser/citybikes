@@ -5,12 +5,60 @@
   <script src="../scripts/topojson.js"></script>
 
 */
+/*
+TOADD function:
+ http://bl.ocks.org/weiglemc/6185069
+ Note:
+ var xValue = function(d) { return d.x;}, // data -> value
+ xScale = d3.scale.linear().range([0, width]), // value -> display
+ xMap = function(d) { return xScale(xValue(d));}, // data -> display
+ xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+ // setup y
+ var yValue = function(d) { return d.y;}, // data -> value
+ yScale = d3.scale.linear().range([height, 0]), // value -> display
+ yMap = function(d) { return yScale(yValue(d));}, // data -> display
+ yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+
+ svg.selectAll(".dot")
+ .data(scatterPlotData)
+ .enter().append("circle")
+ .attr("class", "dot")
+ .attr("r", 3.5)
+ .attr("cx", xMap)
+ .attr("cy", yMap)
+ .style("fill", "#2c7fb8")
+ .on("mouseover", function(d) {
+ tooltip.transition()
+ .duration(200)
+ .style("opacity", .9);
+ tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
+ .style("left", (d3.event.pageX + 5) + "px")
+ .style("top", (d3.event.pageY - 28) + "px");
+ })
+ .on("mouseout", function(d) {
+ tooltip.transition()
+ .duration(500)
+ .style("opacity", 0);
+ });
+ */
+
 //Creates a MapView and renders it into th element with the specified id
 function cityBikeChart(chartId, containerId) {
 
 function DataRow(x, y) {
   this.x = x;
   this.y = y;
+};
+
+function DataRowScatterPlot(x, y, stationID, stationName, district) {
+  this.x = x;
+  this.y = y;
+  this.stationID = stationID;
+  this.stationName = stationName;
+  this.district = district;
 };
 
 d3.select(window).on('resize', resize); 
@@ -45,8 +93,20 @@ var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
 
-var data;
-var filteredData = [];
+// BEGIN vars to input
+var scatterPlotData;
+var filteredData;
+var locationData;
+var dateStart = "4.5.2012"; // input real data
+var dateEnd = "4.5.2012"; // input real data
+var includedStations = [1128,1027,1030]; // input real data
+var currentFilter;
+var boundAreadNumb = 0.1;
+// END vars to input
+
+var filteredStationData;
+
+var averageData;
 
 var chartIsReady = false;
  
@@ -66,7 +126,6 @@ var hoverFunctions = [];
 var currentFunction = new ComposedFunction();
 
 //TODO: Christoph
-//var currentFilter = new ComposedFilterFunction();
 
 var oldFunction = null;
 
@@ -76,7 +135,29 @@ var onReadyCallback = null;
 
 var predictionLineFunction = null;
 
+function getLocationData() {
+  var fileLocationPath = "data/citybike_locations.csv";
+  var cssv = d3.dsv(";", "text/plain");
 
+  cssv(fileLocationPath, function(d){
+    return {
+      stationsID : +d.StationsID,
+      bezirk : +d.Bezirk,
+      station : d.Station
+    }
+  }, function (error, d) {
+        if (error != null) {
+          console.log(error);
+        }
+
+        if (d == null) {
+          console.log("data is null");
+        } else {
+          locationData = d;
+        }
+      }
+  );
+}
 
 
 //Anfang für Christoph
@@ -106,16 +187,14 @@ function parseCitbikeData(d) {
   var minute = parseInt( bufferString2[1] );
   var second = parseInt( bufferString2[2].split(".")[0] );
 
-
   return{
-
     //fahrtnummer : +d.Fahrtnummer,
     entlehnstation : +d.Entlehnstation,
     entlehnzeitpunkt :  new Date( year, month, day, hour, minute, second) , // use function
     //rueckgabestation : +d.Rueckgabestation,
     //rueckgabezeitpunkt : timeParseHelper.parseTimeLong( d.Rueckgabezeitpunkt ), //use function
     //zweck : d.Zweck,
-    land : d.Land
+    //land : d.Land //wurde ausgeklammert
     //touristcard : touristencardComp // 0 = nein, 1 = ja*/
 
   };
@@ -123,10 +202,12 @@ function parseCitbikeData(d) {
 
 
 function loadData(completion) {
- 
+
     var fileFahrtenPath = "data/fahrten_2012.csv";
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
+
+    locationData = getLocationData();
 
     cssv(fileFahrtenPath, parseCitbikeData, function (error, d) {
       if (error != null) {
@@ -136,18 +217,51 @@ function loadData(completion) {
       if (d == null) {
         console.log("data is null");
       } else {
-        data = d;
+        var currentFilter = new ComposedFilterFunction(dateStart,dateEnd,includedStations);
+
         var length = d.length;
-        var timeParseHelper = new FilterTime();
-        timeParseHelper.changeTime('1.4.2012', 2);
-        var composedFilterFunction = new ComposedFilterFunction();
-        composedFilterFunction.addFilter(timeParseHelper);
         console.log("getting graph");
+
         for (var i = 0; i < length; i++) {
-          composedFilterFunction.includeLine( d[i] ) ;
+          currentFilter.includeLine( d[i] ) ;
         }
-        //console.log(loop);
-        console.log(composedFilterFunction.getGraph());
+
+        var tempGraph = currentFilter.getGraph();
+        console.log( "tempGraph=");
+        console.log( tempGraph );
+
+        var lengthDataGraph = tempGraph.length;
+        var numberOfSelectedStations = currentFilter.getNumbOfStations();
+        filteredData = [];
+        var toPush;
+        scatterPlotData = [];
+        for( var i = 0; i < lengthDataGraph; ++i ) {
+          toPush = 0;
+
+          for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            if( tempGraph[i][j] != undefined ) {
+              toPush += tempGraph[i][j];
+            }
+          }
+
+          toPush /= numberOfSelectedStations;
+
+          for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            var toPushScatter = tempGraph[i][j] / toPush;
+            if( toPushScatter != undefined && ( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) ) {
+              var station = includedStations[j];
+              //var district = locationData[ locationData["stationsID"].indexOf(station) ];
+              scatterPlotData.push( new DataRowScatterPlot(i, toPushScatter, station, 0, 0) );
+            }
+          }
+          filteredData.push(new DataRow(i,toPush));
+        }
+        console.log("filteredData=");
+        console.log(filteredData);
+
+        console.log("scatterPlotData=");
+        console.log(scatterPlotData);
+        console.log(locationData);
 
       }
       
@@ -156,17 +270,20 @@ function loadData(completion) {
 }
 
 loadData( function() {
-
+  //getLocationData(); // gets location data
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 5, 2));
 
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 10, 2));
 
   // Generate Some Dummy Data
-  filteredData = [];
+  //filteredData = [];
 
-  for (var i = 20 - 1; i >= 0; i--) {
+  //random data
+  /*for (var i = 20 - 1; i >= 0; i--) {
     filteredData.push(new DataRow(i, 20*Math.random()));
   };
+  console.log( filteredData );
+*/
 
   chartIsReady = true;
   if (onReadyCallback != null) {
@@ -222,6 +339,18 @@ loadData( function() {
     return my;
   }
 
+  my.bandWidth = function(value) {
+    if (!arguments.length) {
+      return onReadyCallback;
+    }
+
+    bandWidth = value;
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
   my.updateFunctionValue = function(index, key, value) {
     var f = currentFunction.getFunction(index);
 
@@ -237,6 +366,10 @@ loadData( function() {
 
       newVal =  (newVal*3 );
     }
+    if (key == 'k') {
+      newVal -=0.5;
+      newVal *= 5;
+    }
     if (key == 'd') {
 
       newVal =  (newVal*20 );
@@ -246,9 +379,6 @@ loadData( function() {
       newVal =  (newVal*filteredData.length);
     }
 
-
-
-
     f.setValueForKey(key, newVal);
   }
 
@@ -257,7 +387,6 @@ loadData( function() {
 
   //Sets the selected Districts 
   //Calling this method also redraws the map to show the new selection
-
 
     var funcKey = "hover"+index;
 
@@ -320,10 +449,11 @@ loadData( function() {
 
   }
 
-    my.addHoverFunctionForKey = function(index) {
+  my.addHoverFunctionForKey = function(index) {
+    addHoverFunctionForKey(index);
+  }
 
-      addHoverFunctionForKey(index);
-    }
+
 
   //Adds the passed values to the selected Districts if tey are not already present
   //Calling this method also redraws the map to show the new selection
@@ -737,12 +867,10 @@ loadData( function() {
       .attr('stroke', 'blue')
       .attr('stroke-width', 2)
       .attr('fill', 'grey');
-
     }
   }
 
-
-
+  resize();
   //TODO: Update Filter 
 
   //

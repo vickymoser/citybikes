@@ -1,0 +1,121 @@
+Terminal;StationsID;Bez;Bezirk; Station; Lage; Boxen; Status
+101;1030;110;1010;Stephansplatz;Ecke Schulerstraﬂehinter dem Stephansdom;18;aktiv
+102;1021;110;1010;Fahnengasse;Ecke HerrengasseU3 Station Herrengasse links beim Ausgang Fahnengasse;18;aktiv
+103;1020;110;1010;Schottenring U4;Franz-Josefs-Kai / Ringturm / Hoehe WerdertorgasseU4 Station Schottenring beim Ausgang Salztorbruecke;21;aktiv
+104;1023;110;1010;Schwedenplatz;Franz-Josefs-Kai / Rotenturmstraﬂebei der U-Bahnstation Schwedenplatz - Ausgang Rotenturmstraﬂe;30;aktiv
+105;1033;110;1010;Julius Raab Platz;Urania /Franz Josefs Kai bei AspernbrueckeU4 Station Schwedenplatz - Ausgang Urania;20;aktiv
+106;1024;110;1010;Stadtpark Stubenring;Parkring / Weiskirchner Str. / Stadtparkgegenueber dem Museum fuer Angewandte Kunst;20;aktiv
+107;1025;110;1010;Volksgarten;Burgring / Volkstheater / BellariaU2, U3 Station Volkstheater - Ausgang Volksgarten;16;aktiv
+108;1026;110;1010;Friedrich Schmidtplatz;Ecke LichtenfelsgasseU2 Station Rathaus;35;aktiv
+109;1029;110;1010;Johannesgasse;Parkring / Stadtpark  beim Haupteingang des Kursalons;20;aktiv
+110;1027;110;1010;Rathausplatz;Dr. Karl Lueger Ringgegenueber des Burgtheaters;20;aktiv
+111;1055;110;1010;Oper;Opernring - Kaerntnerstraﬂe  U-Bahnstation Karlsplatz - Ausgang Oper;18;aktiv
+112;1028;110;1010;Kaerntnerring;Ecke Akademiestraﬂein der Mitte der beiden Einkaufszentren der Ringstraﬂengalerien;16;aktiv
+113;1134;110;1010;Universitaetsring;;38;aktiv
+114;1144;110;1010;Hoher Markt;;26;aktiv
+201;1069;120;1020;Heinestrasse;U-Bahn Aufgang Heinestraﬂe;38;aktiv
+202;1065;120;1020;Nepomukgasse;Nestroyplatz U1;15;aktiv
+203;1066;120;1020;Karmeliterplatz;;14;aktiv
+204;1077;120;1020;Obere Donaustrasse;Obere Donaustraﬂe Ecke Herminengasse,U2 Schottenring Ausgang Herminengasse;20;aktiv
+205;1078;120;1020;Novaragasse;Novaragasse/ Glockengasse,U2 Taborstraﬂe Ausgang Novaragasse;24;aktiv
+206;1086;120;1020;Praterstern;Praterstern Schnellbahnunterfuehrung;40;aktiv
+207;1080;120;1020;Messeplatz;Messeplatz;40;aktiv
+208;1081;120;1020;Krieau;Vorgartenstraﬂe/Trabrennstraﬂe,Unter U2 Krieau;24;aktiv
+209;1082;120;1020;Stadion Center;Meiereistraﬂe/Vorgartenstraﬂe,Unter U2 Stadion;40;aktiv
+211;1138;120;1020;Suedportalstraﬂe;Gegenueber WU-Bibliothek;40;aktiv
+212;1142;120;1020;Radingerstraﬂe;;33;aktiv
+301;1031;130;1030;Schwarzenbergplatz;Rennweg / Ecke Zaunergassevis ‡ vis des Hochstrahlbrunnens;20;aktiv
+302;1053;130;1030;Radetzkyplatz;bei der Schnellbahnunterfuehrung;28;aktiv
+303;1059;130;1030;Wassergasse;Landstraﬂer Hauptstraﬂe Nr. 95bei Galeria;20;aktiv
+304;1060;130;1030;Fasanplatz;Schnellbahnstation Rennweg;10;aktiv
+305;1062;130;1030;Salmgasse;Landstraﬂer Hauptstraﬂebeim Rochusmarkt;18;aktiv
+306;1109;130;1030;Arbeiterkammer;Prinz Eugen Straﬂe gegenueber 20-22;24;aktiv
+307;1105;130;1030;Kundmanngasse;Kundmanngasse vor 2;27;aktiv
+308;1123;130;1030;Bahngasse;Zwischen Linker Bahngasse 11 (Musikuniversitaet)und Rechter Bahngasse 14;30;aktiv
+309;1118;130;1030;Juchgasse;;24;aktiv
+311;1127;130;1030;Petrusgasse;Landstraﬂer Hauptstraﬂe vor 146;28;aktiv
+313;1128;130;1030;Wien Mitte;Landstraﬂer Hauptstraﬂe vor 2B, an der Kreuzung Invalidenstraﬂe;28;aktiv
+401;1067;140;1040;Treitlstrasse;Vor der TU-Bibliothek, U-Bahn Karlsplatz;20;aktiv
+402;1104;140;1040;Mayerhofgasse;Wiedner Hauptstraﬂe vor 49;19;aktiv
+403;1125;140;1040;Sankt-Elisabeth-Platz;Sankt-Elisabeth-Platz gegenueber 1;21;aktiv
+404;1116;140;1040;Heumuehlgasse;Ecke Margaretenstraﬂe 44;20;aktiv
+501;1041;150;1050;Pilgramgasse U4;Hamburgerstrasse  U4 Station Pilgramgasse;16;aktiv
+502;1042;150;1050;Falco Stiege;Kettenbrueckengasse  U4 Station Kettenbrueckengasse - Ausgang Eggerthgasse;17;aktiv
+503;1052;150;1050;Margaretenguertel U4;St. Johann Park  U4 Station Margaretenguertel;30;aktiv
+504;1050;150;1050;Arbeitergasse;Margaretenguertel Ecke Arbeitergassebei Busstation;20;aktiv
+505;1056;150;1050;Reinprechtsdorfer Bruecke;Rechte Wienzeile Ecke Reinprechtsdorferstrasse;20;aktiv
+506;1064;150;1050;Hartmanngasse;vor Wiedner Hauptstraﬂe 92;26;aktiv
+507;1107;150;1050;Siebenbrunnenplatz;Siebenbrunnenplatz vor 5;26;aktiv
+508;1113;150;1050;Matzleinsdorfer Platz;Gruenwaldgasse gegenueber 1;27;aktiv
+509;1108;150;1050;Mittersteig;Bei Schuette-Lihotzky-Park Ecke Hartmanngasse;28;aktiv
+601;1068;160;1060;Kollergerngasse;Mariahilferstraﬂe Ecke Kollergerngasse;20;aktiv
+602;1098;160;1060;Gumpendorfer Guertel;unter U-Bahnbogen Hoehe Ulmanstraﬂe;27;aktiv
+701;1032;170;1070;Museumsplatz;Mariahilfer Strasse / MuseumsquartierU2 Station Museumsquartier;36;aktiv
+702;1044;170;1070;Burggasse U6;Neubauguertel / Burggasse  U6 Station Burggasse - Ausgang Burggasse;20;aktiv
+703;1045;170;1070;Schottenfeldgasse;vor der Kirchebei Lerchenfelderstraﬂe;27;aktiv
+704;1043;170;1070;Urban Loritz Platz;Neubauguertel/Maerzstrasse  U6 Station Burggasse - Ausgang Urban Loritz Platz;25;aktiv
+705;1076;170;1070;Siebensternplatz;Siebensterngasse vor 38 - 40;23;aktiv
+706;1061;170;1070;Weghuberpark;Museumstraﬂe 7naehe Neustiftgasse;20;aktiv
+707;1063;170;1070;Webgasse;Mariahilferstraﬂe 104Ecke Schottenfeldgasse;14;aktiv
+801;1051;180;1080;Alser Strasse/Feldgasse;Alser Strasse ONR 47;12;aktiv
+802;1140;180;1080;Albertgasse;Albertgasse vor 28, nahe Kreuzung Josefstaedter Straﬂe;32;aktiv
+901;1022;190;1090;Sigmund Freud Park;Waehringerstrasse Ecke Universitaetsstrasse / VotivkircheIm Park zwischen der Votivkirche und dem Schottentor;36;aktiv
+902;1034;190;1090;Julius-Tandler-Platz;NordbergstrasseFranz Josefs Bahnhof;20;aktiv
+903;1035;190;1090;Roﬂauer Laende U4;U4 Station Rossauer Laende - Ausgang Nordwest;28;aktiv
+904;1036;190;1090;Frankhplatz;bei Altem AKHvis ‡ vis Otto-Wagner-Platz;20;aktiv
+905;1037;190;1090;Boltzmanngasse;Waehringer Straﬂe Ecke Boltzmanngasse;20;aktiv
+906;1049;190;1090;Spittelau U4/U6;Nordbergbruecke bei Muellverbrennungsanlage  U4 Station Spittelau - Ausgang Wirtschaftsuniversitaet;26;aktiv
+907;1094;190;1090;Sensengasse;Sensengasse 1 nahe Spitalgasse;20;aktiv
+908;1120;190;1090;Bauernfeldplatz;;24;aktiv
+909;1106;190;1090;Markthalle Alsergrund;Nuﬂdorferstraﬂe vor 22;24;aktiv
+910;1119;190;1090;Althanstraﬂe;;22;aktiv
+911;1115;190;1090;Loeblichgasse;Loeblichgasse ggue. 16 Ecke Lustkandlgasse;23;aktiv
+912;1136;190;1090;Berggasse;;40;aktiv
+913;1141;190;1090;Friedensbruecke;gegenueber U-Bahn Ausgang;26;aktiv
+1001;1143;1100;1100;Hauptbahnhof West;;40;aktiv
+1002;1124;1100;1100;Hauptbahnhof;Zwischen Favoritenstraﬂe und Argentinierstraﬂe, am zukuenftigen Hauptbahnhof-Vorplatz Nord;39;aktiv
+1201;1071;1120;1120;Laengenfeldgasse;U-Bahn Ausgang Storchensteg;25;aktiv
+1202;1072;1120;1120;Reschgasse;U-Bahnstation Niederhofstraﬂevor Reschgassse 24;15;aktiv
+1203;1073;1120;1120;Philadelphiabruecke;Meidlinger Hauptstraﬂe Ecke Edelsinnstraﬂe;23;Wartung
+1301;1075;1130;1130;Schoenbrunn Haupteingang;Schloﬂ Schoenbrunn gegenueber Haupteingang;40;aktiv
+1401;1102;1140;1140;Technisches Museum;Mariahilfer Straﬂe 212;31;aktiv
+1501;1103;1150;1150;Westbahnhof Europaplatz;;40;aktiv
+1503;1074;1150;1150;Schoenbrunner Bruecke;;16;aktiv
+1505;1096;1150;1150;Turnergasse;Mariahilfer Straﬂe 165 - Ecke Turnergasse;22;aktiv
+1506;1091;1150;1150;Schwendermarkt;;35;aktiv
+1507;1092;1150;1150;Schmelzbruecke;Felberstraﬂe 42;24;aktiv
+1508;1095;1150;1150;Meiselmarkt;Johnstraﬂe gegenueber 61;28;aktiv
+1509;1122;1150;1150;Markgraf-Ruediger-Strasse;Zwischen Burjanplatz und Kriemhildplatz - an der Markgraf-Ruediger-Straﬂe;32;aktiv
+1511;1130;1150;1150;Wieningerplatz;Goldschlagstraﬂe vor 95-97;25;aktiv
+1513;1121;1150;1150;Selzergasse;;25;aktiv
+1514;1129;1150;1150;Westbahnhof Felberstrasse;Felberstaﬂe vor 1;40;aktiv
+1515;1126;1150;1150;Schweglerstraﬂe;Schweglerstraﬂe Ecke Plunkergasse;26;aktiv
+1516;1135;1150;1150;Westbahnhof Gerstnerstraﬂe;Gerstnerstraﬂe gegenueber 5;35;aktiv
+1601;1039;1160;1160;Josefstaedter Strasse U6;Aeusserer Hernalser Guertel  U6 Station Josefstaedterstrasse;25;aktiv
+1602;1090;1160;1160;Hofferplatz;Hofferplatz gegenueber 8;32;aktiv
+1603;1089;1160;1160;Richard-Wagner-Platz;Richard-Wagner-Platz gegenueber 1;25;aktiv
+1604;1112;1160;1160;Thaliastraﬂe U6;Lerchenfelder Guertel ggue. 31-33;28;aktiv
+1605;1114;1160;1160;Ottakring U3;Paltaufgasse ggue. 16;39;aktiv
+1606;1110;1160;1160;Schuhmeierplatz;;24;aktiv
+1607;1137;1160;1160;Yppenplatz;Yppenplatz vor 4;25;aktiv
+1609;1132;1160;1160;Brestelgasse;Brestelgasse Ecke Ottakringer Straﬂe;24;aktiv
+1610;1139;1160;1160;Froebelgasse;Herbststraﬂe Ecke Froebelgasse vor 14;27;aktiv
+1701;1038;1170;1170;Alser Strasse U6;Station derzeit 100 Meter am aeuﬂeren Waehringer Guertel nach Norden verlegt;26;aktiv
+1702;1079;1170;1170;Elterleinplatz;Kalvarienberggasse vor 27;16;aktiv
+1703;1101;1170;1170;Dornerplatz;Dornerplatz gegenueber 11;24;aktiv
+1704;1100;1170;1170;Rosensteingasse;Hernalser Hauptstraﬂe vor 102 Ecke Rosensteingasse;24;aktiv
+1707;1117;1170;1170;Blumengasse;Rosensteingasse vor 76;24;aktiv
+1708;1058;1170;1170;Palffygasse;Palffygasse vor 25;27;aktiv
+1801;1048;1180;1180;Waehringer Strasse U6;ƒusserer  Waehringer Guertel - Schulgasse  U6 Station Waehringer Strasse;20;aktiv
+1802;1057;1180;1180;Nussdorfer Strasse U6;ƒusserer Waehringer GuertelU6 Station Nuﬂdorfer Strasse;19;aktiv
+1803;1097;1180;1180;Michelbeuern;Waehringer Guertel vor 40Ecke Kreuzgasse;31;aktiv
+1804;1111;1180;1180;Gertrudplatz;Gertrudplatz vor 4;24;aktiv
+1806;1133;1180;1180;Gersthof;Simonygasse 12;26;aktiv
+1807;1131;1180;1180;Aumannplatz;;24;aktiv
+1901;1088;1190;1190;Gymnasiumstraﬂe;Gymasiumstraﬂe vor 85 (Studentenheim) Ecke Billrothstraﬂe;26;aktiv
+2001;1046;1200;1200;Wallensteinplatz;Wallensteinplatz, Naehe Wallensteinstraﬂe;27;aktiv
+2002;1054;1200;1200;Jaegerstrasse U6;Jaegerstrasse - Leipziger Strasse  U6 Station Jaegerstrasse;26;aktiv
+2003;1083;1200;1200;Hellwagstrasse;Meldemannstraﬂe 26 Ecke Hellwagstraﬂe;30;aktiv
+2004;1085;1200;1200;Traisengasse;Dresdnerstraﬂe vor 85 Ecke Traisengasse;24;aktiv
+2005;1087;1200;1200;Millennium Tower;Am Maria Restituta Platz zwischen Rivergate und Schnellbahn;35;aktiv
+2006;1093;1200;1200;Friedrich Engels Platz;zwischen Bus und Bim-Haltestelle;27;aktiv

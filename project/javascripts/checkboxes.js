@@ -26,15 +26,26 @@ function checkAllWien(source) {
 
 }
 
-
 function checkAllStations(source) {
 
-  var checkBoxes = document.getElementsByName('checkStation');
+var id=source.id; 
+console.log(id);
+var stationID;
+
+if ( id.indexOf("w") > -1 ) {
+	stationID = + id.replace("w","");
+} else {
+	stationID = + id.replace("s","");
+}
+console.log(stationID);
+
+  var checkBoxes = document.getElementsByName('station'+stationID);
   for(var i=0, n=checkBoxes.length;i<n;i++) {
     checkBoxes[i].checked = source.checked;
-    console.log(source);
+    console.log("CHECK"+id);
   }
-	allChecked();
+	//allChecked();    
+	console.log("CHECK"+id);
 
 }
 
@@ -47,3 +58,15 @@ function allChecked() {
 	   		ganzWien = true;
 		else ganzWien = false;
 }
+
+function checkStationsOfDistrict(id, check) {
+    console.log(check);
+  var checkBoxes = document.getElementsByName('station'+id);
+  for(var i=0, n=checkBoxes.length;i<n;i++) {
+    checkBoxes[i].checked = check;
+
+  }
+	//allChecked();
+
+}
+

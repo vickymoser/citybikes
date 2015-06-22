@@ -9,6 +9,12 @@
 How to use:
 
  */
+/*
+    global vars
+ */
+
+var graphCounter;
+var graphFilterObject;
 
 /*
     class AbstractFilterFunction
@@ -23,10 +29,24 @@ AbstractFilterFunction.prototype.includeLine= function( line ){};
 
 /*
     class ComposedFilterFunction
+    1.Filter: time
+    2.Filter: location
  */
-function ComposedFilterFunction( filters ) {
+function ComposedFilterFunction( timeForFilterStart,timeForFilterEnd,stations ) {
     AbstractFilterFunction.call(this);
+    graphCounter = 1;
+    this.positionTimeFilter = 0;
+    this.positionLocationFilter = 1;
+    this.numbOfFilters = 2;
+    var buffTimeFilter = new FilterTime();
+    buffTimeFilter.changeTime(timeForFilterStart,timeForFilterEnd);
+    var buffLocationFilter = new FilterLocation(stations);
     this.filters = [];
+    this.addFilter(buffTimeFilter);
+    this.addFilter(buffLocationFilter);
+
+    graphFilterObject = [];
+    graphFilterObject.push(new Array(buffLocationFilter.getNumbOfStations()))
 }
 
 //ComposedFilterFunction is now a "child" of AbstractFilterFunction
@@ -55,22 +75,23 @@ ComposedFilterFunction.prototype = {
 
     //check if the line of data is included with the current filter settings
     includeLine : function( line ){
-        var length = this.filters.length;
-
-        for( var i = 0; i < length ; i++) {
-            if( !this.filters[i].includeLine( line )) return false;
+        for( var i = 0; i < this.numbOfFilters ; ++i) {
+            if( !(this.filters[i].includeLine( line ))) return false;
         }
         return true;
     },
 
     getGraph : function () {
-        var length = this.filters.length;
+        var buffGraph = graphFilterObject;
+        graphFilterObject = [];
+        graphFilterObject.push(new Array(this.filters[this.positionLocationFilter].getNumbOfStations()))
+        this.filters[this.positionTimeFilter].resetVars();
+        this.filters[this.positionLocationFilter].resetVars();
+        return buffGraph;
+    },
 
-        for( var i = 0; i < length ; i++) {
-            if( this.filters[i].type == "FilterTime") {
-                return this.filters[i].getGraph();
-            }
-        }
+    getNumbOfStations : function() {
+        return this.filters[this.positionLocationFilter].getNumbOfStations();
     }
 };
 
@@ -80,14 +101,14 @@ ComposedFilterFunction.prototype = {
  @endTIme: String
  Note: Date () Object http://wiki.selfhtml.org/wiki/JavaScript/Objekte/Date
  */
-function FilterTime( /*timeForFilter, timeFrame*/ ) {
+function FilterTime() {
     AbstractFilterFunction.call(this);
 
-    this.timeForFilter = null;
-    this.timeFrame = null;
-    this.graph = [];
-    this.numbersInPeriod = 0;
-    this.timePeriodToCheck = 1;
+    this.timeForFilterStart = null;
+    this.timeForFilterEnd = null;
+    this.timeFrameCounter = 0;
+    this.done = false;
+    this.isDay = false;
     //this.daysInMonth = 0;
     //this.changeTime( timeForFilter, timeFrame);
 }
@@ -105,23 +126,38 @@ FilterTime.prototype = {
         changes the time frame
      */
     type : "FilterTime",
-    timeFrameEnum : {
-        DAY : 0,
-        WEEK : 1,
-        MONTH : 2
-    },
-    changeTime : function(timeForFilter, timeFrame ) {
-        this.timeForFilter = this.parseTimeShort(timeForFilter);
-        if(timeFrame == this.timeFrameEnum.DAY || timeFrame == this.timeFrameEnum.WEEK || timeFrame == this.timeFrameEnum.MONTH) {
-            this.timeFrame = timeFrame;
+    changeTime : function(timeForFilterStart, timeForFilterEnd ) {
+        this.timeForFilterStart = this.parseTimeShort(timeForFilterStart);
+        this.timeForFilterEnd = this.parseTimeShort(timeForFilterEnd);
+
+        if( this.timeForFilterStart.getMonth() == this.timeForFilterEnd.getMonth() && this.timeForFilterStart.getDate() == this.timeForFilterEnd.getDate() ){
+            this.isDay = true;
+            console.log("is Day");
         } else {
-            throw "timeFrame false: " + timeFrame;
+            this.isDay = false;
+            console.log("isn't Day");
         }
         //this.daysInMonth = new Date(this.timeForFilter.getYear(),this.timeForFilter.getMonth(),0).getDate();
-        console.log("Day= " + this.timeForFilter.getDate() + "Month= " + this.timeForFilter.getMonth() );
-        this.numbersInPeriod = 0;
-        this.timePeriodToCheck = 1;
-        this.graph = [];
+        console.log("Day= " + this.timeForFilterStart.getDate() + " Month= " + this.timeForFilterStart.getMonth() );
+        console.log("Day= " + this.timeForFilterEnd.getDate() + " Month= " + this.timeForFilterEnd.getMonth() );
+        //console.log("daysInMonth= " + new Date( this.timeForFilterStart.getYear(), this.timeForFilterStart.getMonth(),0).getDate() );
+
+        if( this.isDay ) {
+            this.timeFrameCounter = 0;
+        } else {
+            this.timeFrameCounter = this.timeForFilterStart.getDate();
+        }
+        graphCounter = 0;
+        this.done = false;
+    },
+
+    resetVars : function() {
+        if( this.isDay ) {
+            this.timeFrameCounter = 0;
+        } else {
+            this.timeFrameCounter = this.timeForFilterStart.getDate();
+        }
+        this.done = false;
     },
 
     /*
@@ -166,41 +202,49 @@ FilterTime.prototype = {
                 false
      */
     includeLine: function( line ) {
-        if( this.timePeriodToCheck > 31) {
+        if( this.done ) {
             return false;
         }
         var timeName = "entlehnzeitpunkt";
         var timeToCheck = line[timeName];
-        if( this.timeFrame == this.timeFrameEnum.MONTH ) { //if time under the month
-            if(timeToCheck.getMonth() < this.timeForFilter.getMonth()){ //if filter is set for Month
-                return false;
-            } else {
-                if( this.timePeriodToCheck == timeToCheck.getDate() ) { //if the day you are looking at
-                    this.numbersInPeriod ++;
+        //console.log(timeToCheck);
+        if( this.isDay ) { //if time under the month
+            if( timeToCheck.getMonth() == this.timeForFilterStart.getMonth() && timeToCheck.getDay() == this.timeForFilterStart.getDay() ) {
+                if( this.timeFrameCounter == timeToCheck.getHours() ) { //if the day you are looking at
                     return true;
                 } else {
-                    if( this.timePeriodToCheck > timeToCheck.getDate() ) { //if you passed the month
-                        this.graph.push( this.numbersInPeriod );
-                        this.timePeriodToCheck = 32; // now returns always false
-                        return false;
+                    ++this.timeFrameCounter;
+                    ++graphCounter;
+                    return true;
+                }
+            } else {
+                var newTimeToCheck = new Date( timeToCheck.getFullYear(), timeToCheck.getMonth(), timeToCheck.getDate(), 0, 0, 0, 0);
+                if ( newTimeToCheck.getTime() > this.timeForFilterEnd.getTime() ) {
+                    this.done = true;
+                }
+                return false;
+            }
+        } else {
+            var newTimeToCheck = new Date( timeToCheck.getFullYear(), timeToCheck.getMonth(), timeToCheck.getDate(), 0, 0, 0, 0);
+            //console.log(newTimeToCheck.getTime() + " < " + this.timeForFilterStart.getTime() );
+            if( newTimeToCheck.getTime() < this.timeForFilterStart.getTime() ){ //if filter is set for Month
+                return false;
+            } else {
+
+                if( newTimeToCheck.getTime() > this.timeForFilterEnd.getTime() ) {
+                    this.done = true;
+                    return false;
+                } else {
+                    if( this.timeFrameCounter == timeToCheck.getDate() ) { //if the day you are looking at
+                        return true;
                     } else {
-                        this.timePeriodToCheck++;
-                        this.graph.push( this.numbersInPeriod );
-                        this.numbersInPeriod = 1;
+                        this.timeFrameCounter = timeToCheck.getDate();
+                        ++graphCounter;
                         return true;
                     }
                 }
             }
-        } else if(this.timeFrame == this.timeFrameEnum.WEEK){
-
-        } else if(this.timeFrame == this.timeFrameEnum.DAY){
-
         }
-    },
-    getGraph : function() {
-        this.numbersInPeriod = 0;
-        this.timePeriodToCheck = 1;
-        return this.graph;
     }
 
 };
@@ -211,10 +255,11 @@ FilterTime.prototype = {
  @locationFilt: String the location (all = alle, one number = district, many numbers = districts
  @pathToLoxationFile: String path to file CITYBIKEOGD.csv
  */
-function FilterLocation( locationFilt, pathToLocationFile ) {
+function FilterLocation( locationFilt ) {
     AbstractFilterFunction.call(this);
-    this.pathToLocationFile = pathToLocationFile;
     this.locationFilt = locationFilt;
+    this.numberOfStations = this.locationFilt.length;
+    this.buffGraphCounter = 0;
 }
 
 //FilterTime is now a "child" of AbstractFilterFunction
@@ -227,49 +272,47 @@ delete FilterLocation.prototype.includeLine();
 //JSON notation, non privileged public
 FilterLocation.prototype = {
     /*
-     changes the time frame
+         changes the stations
      */
     type: "FilterLocation",
     includeLine: function( line ) {
-
+        var locationName = "entlehnstation";
+        var locationToCheck = line[locationName];
+        for(var i = 0; i < this.numberOfStations; ++i ) {
+            if( locationToCheck == this.locationFilt[i] ) {
+                if( this.buffGraphCounter != graphCounter ) {
+                    for(var j = this.buffGraphCounter; j < graphCounter; ++j ) {
+                        graphFilterObject.push(new Array(this.numberOfStations));
+                    }
+                    this.buffGraphCounter = graphCounter;
+                }
+                if( graphFilterObject[graphCounter][i] == undefined ) {
+                    graphFilterObject[graphCounter][i] = 1;
+                } else {
+                    ++graphFilterObject[graphCounter][i];
+                }
+                return true;
+            }
+        }
+        return false;
     },
     /*
 
      */
     setLocationFilt : function ( locationFilt ) {
-
+        this.buffGraphCounter = 0;
+        this.locationFilt = locationFilt;
+        this.numberOfStations = this.locationFilt.length;
     },
-    /*
-        all = get all stations
-     */
-    getStationsFromDistrict : function( district ) {
-        var cssv = d3.dsv(";", "text/plain");
-
-        cssv(this.pathToLocationFile, function(d){
-            return{
-
-            }
-        }, function (error, data) {
-            if (error != null) {
-                console.log(error);
-            }
-
-            if (data == null) {
-                throw "data is null";
-            } else {
-                var length = data.length;
-                for (var i = 0; i < length; i++) {
-                    if( district == "all" ) {
-
-                    } else if (district === parseInt(district, 10)){
-
-                    } else {
-
-                    }
-                }
-            }
-        });
-
+    getNumbOfStations: function() {
+        return this.locationFilt.length;
+    },
+    getSelectedStations: function() {
+        return this.locationFilt;
+    },
+    resetVars: function() {
+        this.buffGraphCounter = 0;
     }
+
 }
 
