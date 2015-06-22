@@ -48,7 +48,9 @@ TOADD function:
  .style("opacity", 0);
  });
 
-
+ var tooltip = d3.select("body").append("div")
+ .attr("class", "tooltip")
+ .style("opacity", 0);
 
  */
 
@@ -256,7 +258,7 @@ function loadData(completion) {
           toPush /= numberOfSelectedStations;
 
           for( var j = 0; j < numberOfSelectedStations; ++j ) {
-            var toPushScatter = tempGraph[i][j] / toPush;
+            var toPushScatter = tempGraph[i][j] / numberOfSelectedStations;
             if( toPushScatter != undefined && ( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) ) {
               var station = includedStations[j];
               //var district = locationData[ locationData["stationsID"].indexOf(station) ];
