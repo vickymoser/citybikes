@@ -1,0 +1,543 @@
+<html>
+  <head>
+    <title>Line chart demo</title>
+    <link href="stylesheets/barchart.css" rel="stylesheet" type="text/css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="javascripts/topojson.js"></script>
+    <script src="javascripts/function_objects.js"></script>
+    <script src="javascripts/vienna_mapview.js"></script>
+    <script src="javascripts/datepicker.js"></script>
+    <script src="javascripts/filter_object.js"></script>
+    <script src="javascripts/city_bike_prediction_new.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Vickymoser.GitHub.io : Project Website">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/tabs.css">
+
+
+  <body>
+
+
+        <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/vickymoser">View on GitHub</a>
+
+          <h1 id="project_title">VIS Project</h1>
+          <h2 id="project_tagline">Project Website</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+
+      <h3 style="margin-left:50px;">
+<a href="../index.html" style="padding-right: 20px;">Home</a> 
+<a href="../team.html" style="padding-right: 20px;">Project Team</a> 
+<a href="../m1.html" style="padding-right: 20px;">M1</a> 
+<a href="../m2.html" style="padding-right: 20px;">M2</a> 
+<a href="../m3.html" style="padding-right: 20px;">M3</a> 
+<a href="project/index.html" style="padding-right: 20px;">Project</a> 
+</h3>
+
+    <h1 style="margin-left:50px;">City Bike Vienna: Prediction Tool</h1>
+
+</br>
+
+	<h4 style="margin-left:50px;"> <b>Your Selection: </b> </h4>
+
+
+			<!-- Top Navi -->
+		
+			<div class="" style="position: relative;">
+	        	<ul class="tabs">
+			        <li>
+			          <input type="radio" checked name="tabs" id="tab1">
+			          <label for="tab1">Districts</label>
+			          <div id="tab-content1" class="tab-content animated fadeIn">
+			            
+			            <!-- Map View -->
+			            
+			             <div id="mapcontainer" style="margin:0px;">
+      						<div id="mapview" style="margin:0px;"> </div>
+      					
+    					</div>
+			            
+			            
+			            <div id="BEZWI" style="">
+				<table border="0px">
+				<tr>
+					<td colspan="4"><input type="checkbox" name="" value="WIEN" > all districts</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1010" > 1010</td>
+					<td><input type="checkbox" name="" value="w1020" > 1020</td>
+					<td><input type="checkbox" name="" value="w1030" > 1030</td>
+					<td><input type="checkbox" name="" value="w1040" > 1040</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1050" > 1050</td>
+					<td><input type="checkbox" name="" value="w1060" > 1060</td>
+					<td><input type="checkbox" name="" value="w1070" > 1070</td>
+					<td><input type="checkbox" name="" value="w1080" > 1080</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1090" > 1090</td>
+					<td><input type="checkbox" name="" value="w1100" > 1100</td>
+					<td><input type="checkbox" name="" value="w1110" > 1110</td>
+					<td><input type="checkbox" name="" value="w1120" > 1120</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1130" > 1130</td>
+					<td><input type="checkbox" name="" value="w1140" > 1140</td>
+					<td><input type="checkbox" name="" value="w1150" > 1150</td>
+					<td><input type="checkbox" name="" value="w1160" > 1160</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1170" > 1170</td>
+					<td><input type="checkbox" name="" value="w1180" > 1180</td>
+					<td><input type="checkbox" name="" value="w1190" > 1190</td>
+					<td><input type="checkbox" name="" value="w1200" > 1200</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="" value="w1210" > 1210</td>
+					<td><input type="checkbox" name="" value="w1220" > 1220</td>
+					<td><input type="checkbox" name="" value="w1230" > 1230</td>
+					<td>&nbsp;</td>
+				</tr>
+				
+				<!--<tr> <td style="margin: 30px;">Selected Stations: </td><td> </tr></tr>-->
+				
+			</table>
+		</div>
+		
+		<div style="padding: 20px;"> Selected Districts: </div>
+			            
+			            
+			          </div>
+			          
+			          
+			          
+			          
+			        </li>
+			        <li>
+			          <input type="radio" name="tabs" id="tab2">
+			          <label for="tab2">Stations</label>
+			          <div id="tab-content2" class="tab-content animated fadeIn">
+			            
+			            <table>
+			            
+			            <tr>
+			            
+			            <td style = "padding: 20px 20px 0px 20px;">
+			            
+			            Type in the name of the station(s) you want to include: <input type="text" size="12" id="inputFieldStations" />
+			           
+			            </td>
+			           
+			            </tr>
+			            
+			            <tr>
+			            
+			            <td style= "padding: 20px 20px 0px 20px;">
+			            
+			            <input type="checkbox" name="selectAllStations" value="selectAllStations" > Select all stations.
+			            
+			            </td>
+			            
+			            </tr>
+			            
+			            <tr>
+			            
+			            <td style = "padding: 20px 20px 20px 20px;">
+			            
+			            Stations Selected: 
+			            
+			            </td>
+			            
+			            </tr>
+			            
+			            </table>
+			            
+			            
+			          </div>
+			        </li>
+			        <li>
+			          <input type="radio" name="tabs" id="tab3">
+			          <label for="tab3">Time</label>
+			          <div id="tab-content3" class="tab-content animated fadeIn">
+			    
+						<link rel="stylesheet" type="text/css" media="all" href="javascripts/datepick/jsDatePick_ltr.min.css" /> 
+						<script type="text/javascript" src="javascripts/datepick/jsDatePick.min.1.3.js"></script>
+									
+									
+						<script type="text/javascript">
+							window.onload = function(){
+	
+								new JsDatePick({
+									useMode:2,
+									target:"inputFieldFrom",
+									dateFormat:"%d-%M-%Y"
+								});
+		
+								/*new JsDatePick({
+									useMode:2,
+									target:"inputFieldTo",
+									dateFormat:"%d-%M-%Y"
+								});*/
+		
+		
+							};
+						</script>
+
+						<table>
+
+						<tr>
+						<td style="padding: 20px 20px 0px 20px;" >
+						Select Time Span:
+						</td>
+						</tr>
+
+						<tr>
+
+						<td style="padding: 20px;">
+						Starting:
+		
+							<input type="text" size="12" id="inputFieldFrom" />
+							</td>
+							<td  style="padding: 20px;">
+							
+						<input type="radio" name="weekdays" value="weekdays" > Next Week
+						<input type="radio" name="weekdays" value="weekdays" checked> Next Month
+							
+						<!--To...:
+									 
+							 <input type="text" size="12" id="inputFieldTo" />  -->
+						</td>
+						</tr>     
+							 
+						<tr>
+						<td  style="padding: 20px 20px 0px 20px;">
+						Select Day type:
+						</td>
+						</tr>
+
+						<tr>
+						<td  style="padding: 20px;">
+						<input type="checkbox" name="weekdays" value="weekdays" checked> Weekdays
+						<input type="checkbox" name="weekend" value="weekends"> Weekends
+						</td>
+						</tr>
+
+
+									   
+						</table>			            
+			            
+			          </div>
+			        </li>
+			    </ul>
+	      	</div>
+
+
+
+	<h4 style="margin-left:50px;"> <b>Your Prediction: </b> </h4>
+   
+			
+			
+	
+
+
+    <!-- step 1: add svg element -->
+    <div id="chartcontainer" style="overflow:hidden; float:left; width:60%;display: inline-block;margin-left: 50px; border: 1px solid grey;" style = "margin-bottom: 100px;">
+      <svg id="chart" width="1000" height="500" ></svg>
+    </div>
+
+    <!-- step 8: add interactivity 
+
+    <script src="javascripts/city_bike_prediction.js"></script>
+-->
+<div style="display: inline-block; float:left;">
+    <div class="slidercontainer"  id="slidercontainer" ></div>
+
+
+<div style="clear:both;"></div>
+  <select id="newFunctionSelect">
+    <option value="linear_function">Linear
+    <option value="quadratic_function">Quadratisch
+    <option value="gaussian_function">Gauss
+  </select>
+    <button type="button" class="btn btn-default btn-lg" style="float:right" onclick="onAddNewFunctionClicked()"> 
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Neue Function hinzufügen
+    </button>
+   
+<div style="clear:both;"></div>
+
+    <button type="button" class="btn btn-default btn-lg" style="float:right"> 
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Save
+    </button>
+
+     
+</div>
+
+</br>
+
+
+
+<!-- script for creating slider -->
+ <script>
+
+var bikeChart = cityBikeChart("#chart","#chartcontainer");
+
+
+var mapsSelect = mapSelection("#mapview","mapviewresults").
+on("select", function(id) {
+  console.log("didSelectCallBack"+mapsSelect.selectedDistricts());
+}).
+on("unselect",function(id) {
+  console.log("didUnSelectCallBack"+mapsSelect.selectedDistricts());
+});
+
+
+//mapsSelect.selectDistricts([1,2,3,4,5,22,13]);
+
+
+    var inputsCounter = 0;
+
+    function onAddNewFunctionClicked() {
+
+      console.log("ADD NEW");
+
+      var type = document.getElementById("newFunctionSelect").value;
+
+      if (type == 'gaussian_function') {
+          bikeChart.addFunction(new GaussianFunction(0.3, 3, 5, 2));
+      } else if (type == 'linear_function') {
+        bikeChart.addFunction(new LinearFunction(0.3, 3, 12));
+      } else if (type == 'quadratic_function') {
+        bikeChart.addFunction(new QuadraticFunction(0.3));
+      }
+
+      createSlider(type);
+    }
+
+ 
+    function createSlider(type){
+
+        //Create Container
+        var slidersubcontainer = document.createElement("div");
+        slidersubcontainer.setAttribute("id","slidersubcontainer"+inputsCounter);
+        slidersubcontainer.setAttribute("class", "slidersubcontainer");
+        
+        slidersubcontainer.addEventListener('mouseenter', function() {
+          mouseover(slidersubcontainer);
+        },false);
+
+        slidersubcontainer.addEventListener('mouseleave', function() {
+          mouseleave(slidersubcontainer);
+        },false);
+
+
+        //Create Label
+        var sliderLabel = document.createElement("LABEL");
+        sliderLabel.classname = "blaaaaaaa";
+        sliderLabel.setAttribute("id", "sliderLabel"+inputsCounter);
+        sliderLabel.setAttribute("class", "sliderLabel");
+
+        //Create Slider
+        var slider = document.createElement("input");
+        slider.setAttribute("type", "range");
+        slider.setAttribute("id","slider"+inputsCounter);
+
+        slider.setAttribute("name","a");
+        slider.setAttribute("min", "0");
+        slider.setAttribute("max", "20");
+
+
+        slidersubcontainer.appendChild(sliderLabel);
+        slidersubcontainer.appendChild(slider);
+
+        document.getElementById("slidercontainer").appendChild(slidersubcontainer);
+
+        inputsCounter++;
+        
+
+        slider.addEventListener("input", function() {
+          update(slider);
+        },false);
+
+
+        slider.addEventListener('mousedown', function() {
+          mousedown(slider);
+        },false);
+
+        slider.addEventListener('mouseup', function() {
+          mouseup(slider);
+        },false);
+
+        slider.value = 5;
+
+        update(slider);
+    }
+
+    
+
+
+    function mouseover(subcontainer) {
+
+      //console.log("mouseover");
+      var id = subcontainer.id;
+
+      var idx = +id.replace("slidersubcontainer", "");
+
+      bikeChart.addHoverFunctionForKey(idx);
+
+     };
+
+
+    function mousedown(slider) {
+
+      //TODO: Create Phantom Function
+      //TODO: Show Phantom Function
+
+      //console.log("mousedown");
+
+      bikeChart.beginValueTransition();
+      //showPhantomFunction();
+
+
+     };
+
+      function update(slider) {
+        var id = slider.id;
+
+        var idx = +id.replace("slider", "");
+
+        var labelId = "sliderLabel"+idx;
+
+        document.getElementById(labelId).innerHTML =slider.value;
+        //slider.value = value;
+
+        var slidervalue = +slider.value;
+
+        var k = slider.name;
+
+        /*
+        if (phantomFunction != null) {
+         func = phantomFunction.getFunction(idx);
+        } else */
+        /*
+        {
+          func = bikeChart.currentFunction().getFunction(idx);
+        }
+
+        //console.log("updated" + func.__type);
+        if (func.__type == 'gaussian_function') {
+          //console.log("updated gaussian_function");
+          func.b = slidervalue;
+        } else if (func.__type == 'linear_function') {
+          //console.log("updated linear_function");
+          func.k = slidervalue;
+        } else if (func.__type == 'quadratic_function') {
+          //console.log("updated quadratic_function");
+          func.weight = slidervalue;
+        }
+        */
+
+        //func.updateK(slidervalue);
+
+        bikeChart.updateFunctionValue(idx,k, slidervalue );
+
+        bikeChart.transitionValueUpdated();
+        //updateGraph();
+
+     };
+
+    function mouseup(slider) {
+
+      //TODO: Transition Old Function to PhantomFunction then remove Phantom Function
+
+      //console.log("mouseup");
+
+      bikeChart.endValueTransition();
+      //hidePhantomFunction();
+
+     };
+
+
+    function mouseleave(subcontainer) {
+
+      //console.log("mouseleave");
+      var id = subcontainer.id;
+
+      var idx = +id.replace("slidersubcontainer", "");
+
+      bikeChart.removeHoverFunctionForKey(idx);
+      //hideFunction(idx);
+
+     };
+
+    bikeChart.onChartReady( function() {
+
+
+          createSlider('gaussian_function');
+          createSlider('gaussian_function');
+      });
+
+
+
+</script>
+
+
+</br>
+
+
+
+<!-- table-->
+<table id="t01", class="table", cellpadding="2", >
+  <tr style="height:50px"></tr>
+  <tr>
+    <th>#</th>
+    <th>View</th> 
+    <th>Date</th>
+    <th colspan="2">Edit</th>
+  </tr>
+ 
+  <tr>
+    <td>1</td>
+    <td>
+    <a href="#child4">Parameter1: 85, Parameter 2: 45, Parameter 3: 97</a></td> 
+    <td>26.05.2015</td>
+    <td><form><input type=submit value="edit"></form></td>
+    <td><form><input type=submit value="delete"></form></td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>
+    <a href="#child4">Parameter1: 85, Parameter 2: 45, Parameter 3: 97</a></td> 
+    <td>26.05.2015</td>
+    <td><form><input type=submit value="edit"></form></td>
+    <td><form><input type=submit value="delete"></form></td>
+  </tr>
+
+</table>
+
+
+
+
+  <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+
+
+</html>
+

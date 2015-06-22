@@ -60,9 +60,9 @@
 		
 			<div class="" style="position: relative;">
 	        	<ul class="tabs">
-			        <li>
-			          <input type="radio" checked name="tabs" id="tab1">
-			          <label for="tab1">Districts</label>
+			        <li class ="tabli" class="tabli">
+			          <input type="radio" checked name="tabs" id="tab1" class="tabli">
+			          <label for="tab1" class="tabli">Districts</label>
 			          <div id="tab-content1" class="tab-content animated fadeIn">
 			            
 			            <!-- Map View -->
@@ -83,8 +83,8 @@
 				</tr>
 				
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" > 1010</td>
-					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"> 1020</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" onClick="document.getElementById('s1').checked=this.checked; checkAllStations(this); "> 1010</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"onClick="document.getElementById('s2').checked=this.checked; checkAllStations(this); " > 1020</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1030" id="w3"> 1030</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1040" id="w4"> 1040</td>
 				</tr>
@@ -133,9 +133,15 @@
 			          
 			          
 			        </li>
-			        <li>
-			          <input type="radio" name="tabs" id="tab2">
-			          <label for="tab2">Stations</label>
+			        <li class="tabli">
+			          <input type="radio" name="tabs" id="tab2" class="tabli">
+			          <label for="tab2" class="tabli">Stations</label>
+			          
+			          
+			          
+			          
+			          
+			          
 			          <div id="tab-content2" class="tab-content animated fadeIn">
 			            
 			            <table>
@@ -144,6 +150,225 @@
 			            
 
 
+
+
+
+							<script>
+							  $(function() {
+							  	  // Apparently click is better chan change? Cuz IE?
+								  $('input[type="checkbox"]').change(function(e) {
+								  var checked = $(this).prop("checked"),
+									  container = $(this).parent(),
+									  siblings = container.siblings();
+
+								  container.find('input[type="checkbox"]').prop({
+									  indeterminate: false,
+									  checked: checked
+								  });
+
+								  function checkSiblings(el) {
+									  var parent = el.parent().parent(),
+										  all = true;
+
+									  el.siblings().each(function() {
+										  return all = ($(this).children('input[type="checkbox"]').prop("checked") === checked);
+									  });
+
+									  if (all && checked) {
+										  parent.children('input[type="checkbox"]').prop({
+											  indeterminate: false,
+											  checked: checked
+										  });
+										  checkSiblings(parent);
+									  } else if (all && !checked) {
+										  parent.children('input[type="checkbox"]').prop("checked", checked);
+										  parent.children('input[type="checkbox"]').prop("indeterminate", (parent.find('input[type="checkbox"]:checked').length > 0));
+										  checkSiblings(parent);
+									  } else {
+										  el.parents("li").children('input[type="checkbox"]').prop({
+											  indeterminate: true,
+											  checked: false
+										  });
+									  }
+									}
+
+									checkSiblings(container);
+								  });
+								});
+								</script>
+
+
+
+
+			          
+			          
+			          
+			           <ul class="stations">
+									<li class="stations">
+										<input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="s1" onClick="document.getElementById('w1').checked=this.checked; checkAllStations(this);">
+										<label for="tall" class="bla">1st District</label>
+
+										<ul class="stations1">
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0101">
+												 <label for="tall">101</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0102">
+												 <label for="tall">102</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0103">
+												 <label for="tall">103</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0104">
+												 <label for="tall">104</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0105">
+												 <label for="tall">105</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0106">
+												 <label for="tall">106</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0107">
+												 <label for="tall">107</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0108">
+												 <label for="tall">108</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0109">
+												 <label for="tall">109</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0110">
+												 <label for="tall">110</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0111">
+												 <label for="tall">111</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0112">
+												 <label for="tall">112</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0113">
+												 <label for="tall">113</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station1" id="st0114">
+												 <label for="tall">114</label>
+											 </li>
+									
+										</ul>
+									</li>
+									
+									
+									<li>
+										<input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="s2" onClick="document.getElementById('w2').checked=this.checked; checkAllStations(this);">
+										<label for="short">2nd District</label>
+									
+										<ul class="stations2">
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0201">
+												 <label for="tall">201</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0202">
+												 <label for="tall">202</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0203">
+												 <label for="tall">203</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0204">
+												 <label for="tall">204</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0205">
+												 <label for="tall">205</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0206">
+												 <label for="tall">206</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0207">
+												 <label for="tall">207</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0208">
+												 <label for="tall">208</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0209">
+												 <label for="tall">209</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0210">
+												 <label for="tall">210</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0211">
+												 <label for="tall">211</label>
+											 </li>
+											 
+											 <li class="stations">
+												 <input type="checkbox" name="station2" id="st0212">
+												 <label for="tall">212</label>
+											 </li>
+											 
+											
+									
+										</ul>
+									</li>
+									
+									
+									
+									
+
+										
+									</li>
+								</ul>
+
+								
+			          
+			          
+			          
+
+
+				<!--
+
 				<table border="0px" style="">
 				<tr>
 					<td colspan="4"><input type="checkbox" name="" value="WIEN" onClick="checkAllStations(this)"> all stations within selected district(s)</td>
@@ -151,7 +376,7 @@
 				<tr>			            <td><div style= "height:15px;"></div></td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1010" id="s1" > 0001</td>
+					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1010" id="st1"> 0001</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1020" id="s2"> 0002</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1030" id="s3"> 0003</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkStation" value="w1040" id="s4"> 0004</td>
@@ -174,7 +399,7 @@
 				
 				<!--<tr> <td style="margin: 30px;">Selected Stations: </td><td> </tr></tr>-->
 				
-			</table>
+			<!--</table> 
 				
 				
 				
@@ -213,14 +438,14 @@
 			            
 			            </tr> -->
 			            
-			            </table>
+			            </table> 
 			            
 			            
 			          </div>
 			        </li>
-			        <li>
-			          <input type="radio" name="tabs" id="tab3">
-			          <label for="tab3">Time</label>
+			        <li class="tabli">
+			          <input type="radio" name="tabs" id="tab3" class="tabli">
+			          <label for="tab3" class="tabli">Time</label>
 			          <div id="tab-content3" class="tab-content animated fadeIn">
 			    
 						<link rel="stylesheet" type="text/css" media="all" href="javascripts/datepick/jsDatePick_ltr.min.css" /> 
@@ -361,19 +586,37 @@ var bikeChart = cityBikeChart("#chart","#chartcontainer");
 var mapsSelect = mapSelection("#mapview","mapviewresults").
 on("select", function(id) {
   console.log("didSelectCallBack"+mapsSelect.selectedDistricts());
+  
+  //document.querySelectorAll('p[id="w'+id'"]').checked=true;
+  
   document.getElementById("w"+id).checked = true;
+    document.getElementById("s"+id).checked = true;
+    var check=true;
+checkStationsOfDistrict(id, check);
  // addCheck();
 }).
 on("unselect",function(id) {
   console.log("didUnSelectCallBack"+mapsSelect.selectedDistricts());
   document.getElementById("w"+id).checked = false;
+    document.getElementById("s"+id).checked = false;
+    var check=false;
+checkStationsOfDistrict(id, check);
+//checkAllStations("w"+id);
  // removeCheck();
 });
 
 $(".districtcheckbox").change(function() {
 	var id = this.id;
+var distictNumber;
+	
+if ( id.indexOf("w") > -1 ) {
+	distictNumber = + id.replace("w","");
+} else {
+	distictNumber = + id.replace("s","");
+}
 
-	var distictNumber = + id.replace("w","");
+
+	//var distictNumber = + id.replace("w","");
 
     if(this.checked) {
     	mapsSelect.selectDistricts([distictNumber]);

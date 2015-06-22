@@ -16,10 +16,10 @@
 	        margin: 50px;
 	        margin-top: 0px;
 	      }
-	      .tabs li{
+	      .tabs li.tabli{
 	        float: left;
 	      }
-	      .tabs label {
+	      .tabs label.tabli {
 	          display: block;
 	          padding: 10px 20px;
 	          border-radius: 2px 2px 0 0;
@@ -36,7 +36,7 @@
 	          -o-transition: all 0.2s ease-in-out;
 	          transition: all 0.2s ease-in-out;
 	      }
-	      .tabs label:hover {
+	      .tabs label.tabli:hover {
 	        background: rgba(255,255,255,0.5);
 	        top: 0; 
 	      }
@@ -73,3 +73,7 @@
 	        animation-duration: 0.5s;
 	      }
 	    
+	    li.stations {display: inline-block;
+   /* margin: 5px;*/
+    /*padding: 10px;*/
+    vertical-align:top;}
