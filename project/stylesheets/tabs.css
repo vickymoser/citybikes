@@ -19,7 +19,7 @@
 	      }
 	      .tabs li.tabli{
 	        float: left;
-	        overflow:auto;
+	        /*overflow:auto;*/
 	      }
 	      .tabs label.tabli {
 	          display: block;
