@@ -71,9 +71,9 @@ var filteredData;
 var locationData;
 var dateStart = "1.5.2012"; // input real data
 var dateEnd = "20.5.2012"; // input real data
-var includedStations = [1128,1027,1030]; // input real data
+var includedStations = [1067,1027,1030]; // input real data
 var currentFilter;
-var boundAreadNumb = 10;
+var boundAreadNumb = 20;
 // END vars to input
 
 var filteredStationData;
@@ -207,7 +207,7 @@ function processData() {
 
         for( var j = 0; j < numberOfSelectedStations; ++j ) {
             if( tempGraph[i][j] != undefined) {
-                var toPushScatter = tempGraph[i][j] / numberOfSelectedStations;
+                var toPushScatter = tempGraph[i][j];// / numberOfSelectedStations;
                 if( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) {
                     console.log("reach j= " + j);
                     var station = includedStations[j];
