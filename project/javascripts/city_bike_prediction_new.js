@@ -71,7 +71,6 @@ var hoverFunctions = [];
 var currentFunction = new ComposedFunction();
 
 //TODO: Christoph
-//var currentFilter = new ComposedFilterFunction();
 
 var oldFunction = null;
 
@@ -163,16 +162,17 @@ function loadData(completion) {
       } else {
         data = d;
         var length = d.length;
-        var timeParseHelper = new FilterTime();
+        /*var timeParseHelper = new FilterTime();
         timeParseHelper.changeTime('1.4.2012');
         var composedFilterFunction = new ComposedFilterFunction();
-        composedFilterFunction.addFilter(timeParseHelper);
+        composedFilterFunction.addFilter(timeParseHelper);*/
         console.log("getting graph");
+        var currentFilter = new ComposedFilterFunction("4.1.2012","4.1.2012",[1033,1065,1061]);
         for (var i = 0; i < length; i++) {
-          composedFilterFunction.includeLine( d[i] ) ;
+          currentFilter.includeLine( d[i] ) ;
         }
         //console.log(loop);
-        console.log(composedFilterFunction.getGraph());
+        console.log(currentFilter.getGraph());
 
       }
       
@@ -181,7 +181,7 @@ function loadData(completion) {
 }
 
 loadData( function() {
-  getLocationData(); // gets location data
+  //getLocationData(); // gets location data
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 5, 2));
 
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 10, 2));

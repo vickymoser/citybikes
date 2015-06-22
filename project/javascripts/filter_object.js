@@ -32,13 +32,21 @@ AbstractFilterFunction.prototype.includeLine= function( line ){};
     1.Filter: time
     2.Filter: location
  */
-function ComposedFilterFunction( filters ) {
+function ComposedFilterFunction( timeForFilterStart,timeForFilterEnd,stations ) {
     AbstractFilterFunction.call(this);
     graphCounter = 1;
     this.positionTimeFilter = 0;
     this.positionLocationFilter = 1;
     this.numbOfFilters = 2;
+    var buffTimeFilter = new FilterTime();
+    buffTimeFilter.changeTime(timeForFilterStart,timeForFilterEnd);
+    var buffLocationFilter = new FilterLocation(stations);
     this.filters = [];
+    this.addFilter(buffTimeFilter);
+    this.addFilter(buffLocationFilter);
+
+    graphFilterObject = [];
+    graphFilterObject.push(new Array(buffLocationFilter.getNumbOfStations()))
 }
 
 //ComposedFilterFunction is now a "child" of AbstractFilterFunction
@@ -67,8 +75,8 @@ ComposedFilterFunction.prototype = {
 
     //check if the line of data is included with the current filter settings
     includeLine : function( line ){
-        for( var i = 0; i < this.numbOfFilters ; i++) {
-            if( !this.filters[i].includeLine( line )) return false;
+        for( var i = 0; i < this.numbOfFilters ; ++i) {
+            if( !(this.filters[i].includeLine( line ))) return false;
         }
         return true;
     },
@@ -76,12 +84,14 @@ ComposedFilterFunction.prototype = {
     getGraph : function () {
         var buffGraph = graphFilterObject;
         graphFilterObject = [];
-        this.filters[0].resetVars();
+        graphFilterObject.push(new Array(this.filters[this.positionLocationFilter].getNumbOfStations()))
+        this.filters[this.positionTimeFilter].resetVars();
+        this.filters[this.positionLocationFilter].resetVars();
         return buffGraph;
     },
 
     getNumbOfStations : function() {
-        return this.filters[1].getNumbOfStations();
+        return this.filters[this.positionLocationFilter].getNumbOfStations();
     }
 };
 
@@ -91,7 +101,7 @@ ComposedFilterFunction.prototype = {
  @endTIme: String
  Note: Date () Object http://wiki.selfhtml.org/wiki/JavaScript/Objekte/Date
  */
-function FilterTime( /*timeForFilter, timeFrame*/ ) {
+function FilterTime() {
     AbstractFilterFunction.call(this);
 
     this.timeForFilterStart = null;
@@ -119,16 +129,18 @@ FilterTime.prototype = {
     changeTime : function(timeForFilterStart, timeForFilterEnd ) {
         this.timeForFilterStart = this.parseTimeShort(timeForFilterStart);
         this.timeForFilterEnd = this.parseTimeShort(timeForFilterEnd);
-        //new Date(year, month, 0).getDate();
+
         if( this.timeForFilterStart.getMonth() == this.timeForFilterEnd.getMonth() && this.timeForFilterStart.getDate() == this.timeForFilterEnd.getDate() ){
             this.isDay = true;
+            console.log("is Day");
         } else {
             this.isDay = false;
+            console.log("isn't Day");
         }
         //this.daysInMonth = new Date(this.timeForFilter.getYear(),this.timeForFilter.getMonth(),0).getDate();
-        console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
-        console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
-        console.log("daysInMonth= " + new Date( this.timeForFilterStart.getYear(), this.timeForFilterStart.getMonth(),0).getDate() );
+        console.log("Day= " + this.timeForFilterStart.getDate() + " Month= " + this.timeForFilterStart.getMonth() );
+        console.log("Day= " + this.timeForFilterEnd.getDate() + " Month= " + this.timeForFilterEnd.getMonth() );
+        //console.log("daysInMonth= " + new Date( this.timeForFilterStart.getYear(), this.timeForFilterStart.getMonth(),0).getDate() );
 
         if( this.isDay ) {
             this.timeFrameCounter = 0;
@@ -195,6 +207,7 @@ FilterTime.prototype = {
         }
         var timeName = "entlehnzeitpunkt";
         var timeToCheck = line[timeName];
+        //console.log(timeToCheck);
         if( this.isDay ) { //if time under the month
             if( timeToCheck.getMonth() == this.timeForFilterStart.getMonth() && timeToCheck.getDay() == this.timeForFilterStart.getDay() ) {
                 if( this.timeFrameCounter == timeToCheck.getHours() ) { //if the day you are looking at
@@ -205,18 +218,21 @@ FilterTime.prototype = {
                     return true;
                 }
             } else {
-                var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
-                if ( newTimeToCheck.parse() > this.timeForFilterEnd.parse() ) {
+                var newTimeToCheck = new Date( timeToCheck.getFullYear(), timeToCheck.getMonth(), timeToCheck.getDate(), 0, 0, 0, 0);
+                if ( newTimeToCheck.getTime() > this.timeForFilterEnd.getTime() ) {
                     this.done = true;
                 }
                 return false;
             }
         } else {
-            var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
-            if( newTimeToCheck.parse() < this.timeForFilterStart.parse() ){ //if filter is set for Month
+            var newTimeToCheck = new Date( timeToCheck.getFullYear(), timeToCheck.getMonth(), timeToCheck.getDate(), 0, 0, 0, 0);
+            //console.log(newTimeToCheck.getTime() + " < " + this.timeForFilterStart.getTime() );
+            if( newTimeToCheck.getTime() < this.timeForFilterStart.getTime() ){ //if filter is set for Month
                 return false;
             } else {
-                if( newTimeToCheck.parse() > this.timeForFilterStart.parse() ) {
+                console.log("after today");
+
+                if( newTimeToCheck.getTime() > this.timeForFilterEnd.getTime() ) {
                     this.done = true;
                     return false;
                 } else {
@@ -261,12 +277,13 @@ FilterLocation.prototype = {
      */
     type: "FilterLocation",
     includeLine: function( line ) {
-        var locationToCheck = line[Entlehnstation];
+        var locationName = "entlehnstation";
+        var locationToCheck = line[locationName];
         for(var i = 0; i < this.numberOfStations; ++i ) {
             if( locationToCheck == this.locationFilt[i] ) {
                 if( this.buffGraphCounter != graphCounter ) {
-                    for(var j = this.buffGraphCounter; j <= graphCounter; ++j ) {
-                        graphFilterObject[this.buffGraphCounter].push(new Array(this.numberOfStations));
+                    for(var j = this.buffGraphCounter; j < graphCounter; ++j ) {
+                        graphFilterObject.push(new Array(this.numberOfStations));
                     }
                     this.buffGraphCounter = graphCounter;
                 }
@@ -293,6 +310,10 @@ FilterLocation.prototype = {
     },
     getSelectedStations: function() {
         return this.locationFilt;
+    },
+    resetVars: function() {
+        this.buffGraphCounter = 0;
     }
+
 }
 
