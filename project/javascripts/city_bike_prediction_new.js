@@ -48,9 +48,12 @@ TOADD function:
  .style("opacity", 0);
  });
 
-
+ var tooltip = d3.select("body").append("div")
+ .attr("class", "tooltip")
+ .style("opacity", 0);
 
  */
+
 
 //Creates a MapView and renders it into th element with the specified id
 function cityBikeChart(chartId, containerId) {
@@ -104,8 +107,8 @@ var yAxis = d3.svg.axis()
 var scatterPlotData;
 var filteredData;
 var locationData;
-var dateStart = "4.5.2012"; // input real data
-var dateEnd = "4.5.2012"; // input real data
+var dateStart = "1.8.2012"; // input real data
+var dateEnd = "20.8.2012"; // input real data
 var includedStations = [1128,1027,1030]; // input real data
 var currentFilter;
 var boundAreadNumb = 0.1;
@@ -142,7 +145,7 @@ var onReadyCallback = null;
 
 var predictionLineFunction = null;
 
-function getLocationData() {
+function getLocationData(completion) {
   var fileLocationPath = "data/citybike_locations.csv";
   var cssv = d3.dsv(";", "text/plain");
 
@@ -162,6 +165,8 @@ function getLocationData() {
         } else {
           locationData = d;
         }
+
+        completion();
       }
   );
 }
@@ -208,13 +213,18 @@ function parseCitbikeData(d) {
 }
 
 
+function processData() {
+  
+}
+
+
 function loadData(completion) {
 
     var fileFahrtenPath = "data/fahrten_2012.csv";
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
 
-    locationData = getLocationData();
+    locationData = getLocationData(function() {
 
     cssv(fileFahrtenPath, parseCitbikeData, function (error, d) {
       if (error != null) {
@@ -254,7 +264,7 @@ function loadData(completion) {
           toPush /= numberOfSelectedStations;
 
           for( var j = 0; j < numberOfSelectedStations; ++j ) {
-            var toPushScatter = tempGraph[i][j] / toPush;
+            var toPushScatter = tempGraph[i][j] / numberOfSelectedStations;
             if( toPushScatter != undefined && ( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) ) {
               var station = includedStations[j];
               //var district = locationData[ locationData["stationsID"].indexOf(station) ];
@@ -274,6 +284,7 @@ function loadData(completion) {
       
         completion();
     });
+});
 }
 
 loadData( function() {
@@ -354,10 +365,45 @@ loadData( function() {
     bandWidth = value;
     boundAreadNumb = bandWidth/2;
 
+    processData();
+
     if (chartIsReady) {
       redraw();
     }
   }
+
+
+  my.dateStart = function(value) {
+    if (!arguments.length) {
+      return bandWidth;
+    }
+
+    dateStart = value;
+
+    processData();
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
+
+  my.dateEnd = function(value) {
+    if (!arguments.length) {
+      return bandWidth;
+    }
+
+    dateEnd = value;
+
+    processData();
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
+
+  //bikechart.dateEnd(//Neues Datum)
 
 
   my.updateFunctionValue = function(index, key, value) {
@@ -700,6 +746,15 @@ loadData( function() {
 
     selection.attr('d', actualLineBand(filteredData));
 
+    var xValue = function(d) { return xScale(d.x);}; // data -> value
+
+    // setup y
+    var yValue = function(d) { return yScale(d.y);}; // data -> value
+
+    chart.selectAll(".dot")
+    .attr("cx", xValue)
+    .attr("cy", yValue);
+
 
   }
 
@@ -762,6 +817,10 @@ loadData( function() {
     if (!chartIsReady) {return;};
 
 
+    var xValue = function(d) { return xScale(d.x);}; // data -> value
+
+    // setup y
+    var yValue = function(d) { return yScale(d.y);}; // data -> value
 
     // Compute the extents of the data
     var minYValue = 0,
@@ -769,6 +828,16 @@ loadData( function() {
 
     var minXValue = d3.min(filteredData, function(d) {return currentFunction.lineFunctionX(d);}),
         maxXValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionX(d);});
+
+    var actualmaxYValue = d3.max(filteredData, function(d) {return d.y; });
+    var actualmaxYValueScatterPlot = d3.max(scatterPlotData, function(d) {return d.y; });
+
+        maxYValue = Math.max(actualmaxYValue,maxYValue);
+
+
+        maxYValue = Math.max(actualmaxYValueScatterPlot,maxYValue);
+
+
 
     // Step 4: add scales
    // y is backwards because 0 is the top left corner
@@ -875,6 +944,35 @@ loadData( function() {
       .attr('stroke-width', 2)
       .attr('fill', 'grey');
     }
+
+
+
+
+
+
+    chart.selectAll(".dot").data(scatterPlotData).enter().append("circle")
+    .attr("class", "dot")
+    .attr("r", 3.5)
+    .attr("cx", xValue)
+    .attr("cy", yValue)
+    .style("fill", "#2c7fb8")
+    .on("mouseover", function(d) {
+    tooltip.transition()
+    .duration(200)
+    .style("opacity", .9);
+    tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
+    .style("left", (d3.event.pageX + 5) + "px")
+    .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+    tooltip.transition()
+    .duration(500)
+    .style("opacity", 0);
+    });
+
+
+
+
   }
 
   resize();
