@@ -79,7 +79,7 @@ d3.json("geo/wien.json", function(temp) {
 
       for (var i = 1; i <= 23; i++) {
         r.push(i);
-      };
+      }
       return r;
   };
 
@@ -96,9 +96,18 @@ d3.json("geo/wien.json", function(temp) {
         selectedDistricts.push(distr);
       }
 
+    }
 
+    redraw();
+    return my;
+  }
 
-    };
+  my.selectDistrict = function(value) {
+    var idx = selectedDistricts.indexOf(value);
+
+      if (idx == -1) {
+        selectedDistricts.push(value);
+      }
 
     redraw();
     return my;
@@ -159,6 +168,7 @@ redraw();
   }
 
 function redraw() {
+  if (!isReady) {return;}
   g.selectAll("path")
   .attr("class", function(d) {
       var cl ="mappath";
@@ -171,8 +181,6 @@ function redraw() {
       if (i != -1) {
         cl += " selected";
       } 
-
-
       return cl;
 
     });

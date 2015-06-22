@@ -86,10 +86,7 @@
 				<tr>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1"> 1010</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"> 1020</td>
-<!-- =======  Map View 
-					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1010" id="w1" onClick="document.getElementById('s1').checked=this.checked; checkAllStations(this); "> 1010</td>
-					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1020" id="w2"onClick="document.getElementById('s2').checked=this.checked; checkAllStations(this); " > 1020</td>
->>>>>>> origin/gh-pages -->
+
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1030" id="w3"> 1030</td>
 					<td><input type="checkbox" class="districtcheckbox" name="checkWien" value="w1040" id="w4"> 1040</td>
 				</tr>
@@ -1307,9 +1304,13 @@ on("select", function(id) {
   
   //document.querySelectorAll('p[id="w'+id'"]').checked=true;
   
+console.log(id);
+
   document.getElementById("w"+id).checked = true;
     document.getElementById("s"+id).checked = true;
     var check=true;
+
+
 checkStationsOfDistrict(id, check);
  // addCheck();
 }).
@@ -1318,6 +1319,9 @@ on("unselect",function(id) {
   document.getElementById("w"+id).checked = false;
     document.getElementById("s"+id).checked = false;
     var check=false;
+
+
+console.log(id);
 checkStationsOfDistrict(id, check);
 //checkAllStations("w"+id);
  // removeCheck();
@@ -1327,6 +1331,8 @@ checkStationsOfDistrict(id, check);
 $(".districtcheckbox").change(function() {
 	var id = this.id;
 var distictNumber;
+
+console.log("KJbkfngskndjgksdlkfs");
 	
 if ( id.indexOf("w") > -1 ) {
 	distictNumber = + id.replace("w","");
@@ -1339,7 +1345,7 @@ if ( id.indexOf("w") > -1 ) {
 
     if(this.checked) {
     	
-    	mapsSelect.selectDistrict([distictNumber]);
+    	mapsSelect.selectDistrict(distictNumber);
     	
 
     } else {

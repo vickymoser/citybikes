@@ -6,53 +6,14 @@
 
 */
 /*
-TOADD function:
 
-
+Used Scatterplot example:
  http://bl.ocks.org/weiglemc/6185069
- Note:
-
-
- var xValue = function(d) { return d.x;}, // data -> value
- xScale = d3.scale.linear().range([0, width]), // value -> display
- xMap = function(d) { return xScale(xValue(d));}, // data -> display
- xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-
- // setup y
- var yValue = function(d) { return d.y;}, // data -> value
- yScale = d3.scale.linear().range([height, 0]), // value -> display
- yMap = function(d) { return yScale(yValue(d));}, // data -> display
- yAxis = d3.svg.axis().scale(yScale).orient("left");
-
-
-
- svg.selectAll(".dot")
- .data(scatterPlotData)
- .enter().append("circle")
- .attr("class", "dot")
- .attr("r", 3.5)
- .attr("cx", xMap)
- .attr("cy", yMap)
- .style("fill", "#2c7fb8")
- .on("mouseover", function(d) {
- tooltip.transition()
- .duration(200)
- .style("opacity", .9);
- tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
- .style("left", (d3.event.pageX + 5) + "px")
- .style("top", (d3.event.pageY - 28) + "px");
- })
- .on("mouseout", function(d) {
- tooltip.transition()
- .duration(500)
- .style("opacity", 0);
- });
-
- var tooltip = d3.select("body").append("div")
- .attr("class", "tooltip")
- .style("opacity", 0);
-
  */
+
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
 
 //Creates a MapView and renders it into th element with the specified id
@@ -104,14 +65,15 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 // BEGIN vars to input
+var rawData;
 var scatterPlotData;
 var filteredData;
 var locationData;
-var dateStart = "1.8.2012"; // input real data
-var dateEnd = "20.8.2012"; // input real data
-var includedStations = [1128,1027,1030]; // input real data
+var dateStart = "1.5.2012"; // input real data
+var dateEnd = "20.5.2012"; // input real data
+var includedStations = [1067,1027,1030]; // input real data
 var currentFilter;
-var boundAreadNumb = 0.1;
+var boundAreadNumb = 20;
 // END vars to input
 
 var filteredStationData;
@@ -214,7 +176,55 @@ function parseCitbikeData(d) {
 
 
 function processData() {
-  
+    var currentFilter = new ComposedFilterFunction(dateStart,dateEnd,includedStations);
+
+    var length = rawData.length;
+    console.log("process graph data");
+
+    for (var i = 0; i < length; i++) {
+        currentFilter.includeLine( rawData[i] ) ;
+    }
+
+    var tempGraph = currentFilter.getGraph();
+    console.log( "tempGraph=");
+    console.log( tempGraph );
+
+    var lengthDataGraph = tempGraph.length;
+    var numberOfSelectedStations = currentFilter.getNumbOfStations();
+    filteredData = [];
+    var toPush;
+    scatterPlotData = [];
+    for( var i = 0; i < lengthDataGraph; ++i ) {
+        toPush = 0;
+
+        for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            if( tempGraph[i][j] != undefined ) {
+                toPush += tempGraph[i][j];
+            }
+        }
+
+        toPush /= numberOfSelectedStations;
+
+        for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            if( tempGraph[i][j] != undefined) {
+                var toPushScatter = tempGraph[i][j];// / numberOfSelectedStations;
+                if( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) {
+                    console.log("reach j= " + j);
+                    var station = includedStations[j];
+                    //var district = locationData[ locationData["stationsID"].indexOf(station) ];
+                    scatterPlotData.push( new DataRowScatterPlot(i, toPushScatter, station, 0, 0) );
+                }
+            }
+
+        }
+        filteredData.push(new DataRow(i,toPush));
+    }
+    console.log("filteredData=");
+    console.log(filteredData);
+
+    console.log("scatterPlotData=");
+    console.log(scatterPlotData);
+    //console.log(locationData);
 }
 
 
@@ -234,52 +244,8 @@ function loadData(completion) {
       if (d == null) {
         console.log("data is null");
       } else {
-        var currentFilter = new ComposedFilterFunction(dateStart,dateEnd,includedStations);
-
-        var length = d.length;
-        console.log("getting graph");
-
-        for (var i = 0; i < length; i++) {
-          currentFilter.includeLine( d[i] ) ;
-        }
-
-        var tempGraph = currentFilter.getGraph();
-        console.log( "tempGraph=");
-        console.log( tempGraph );
-
-        var lengthDataGraph = tempGraph.length;
-        var numberOfSelectedStations = currentFilter.getNumbOfStations();
-        filteredData = [];
-        var toPush;
-        scatterPlotData = [];
-        for( var i = 0; i < lengthDataGraph; ++i ) {
-          toPush = 0;
-
-          for( var j = 0; j < numberOfSelectedStations; ++j ) {
-            if( tempGraph[i][j] != undefined ) {
-              toPush += tempGraph[i][j];
-            }
-          }
-
-          toPush /= numberOfSelectedStations;
-
-          for( var j = 0; j < numberOfSelectedStations; ++j ) {
-            var toPushScatter = tempGraph[i][j] / numberOfSelectedStations;
-            if( toPushScatter != undefined && ( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) ) {
-              var station = includedStations[j];
-              //var district = locationData[ locationData["stationsID"].indexOf(station) ];
-              scatterPlotData.push( new DataRowScatterPlot(i, toPushScatter, station, 0, 0) );
-            }
-          }
-          filteredData.push(new DataRow(i,toPush));
-        }
-        console.log("filteredData=");
-        console.log(filteredData);
-
-        console.log("scatterPlotData=");
-        console.log(scatterPlotData);
-        console.log(locationData);
-
+        rawData = d;
+        processData();
       }
       
         completion();
@@ -361,7 +327,6 @@ loadData( function() {
     if (!arguments.length) {
       return bandWidth;
     }
-
     bandWidth = value;
     boundAreadNumb = bandWidth/2;
 
@@ -375,7 +340,7 @@ loadData( function() {
 
   my.dateStart = function(value) {
     if (!arguments.length) {
-      return bandWidth;
+      return dateStart;
     }
 
     dateStart = value;
@@ -390,7 +355,7 @@ loadData( function() {
 
   my.dateEnd = function(value) {
     if (!arguments.length) {
-      return bandWidth;
+      return dateEnd;
     }
 
     dateEnd = value;
