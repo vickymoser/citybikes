@@ -60,12 +60,20 @@ function allChecked() {
 }
 
 function checkStationsOfDistrict(id, check) {
+
+if (check) 
+	document.getElementById('s'+id).style.opacity="1";
+else document.getElementById('s'+id).style.opacity="0.5";
+
     console.log(check);
   var checkBoxes = document.getElementsByName('station'+id);
   for(var i=0, n=checkBoxes.length;i<n;i++) {
     checkBoxes[i].checked = check;
+    console.log(i);
 
   }
+  
+
 	//allChecked();
 
 }
