@@ -104,8 +104,8 @@ var yAxis = d3.svg.axis()
 var scatterPlotData;
 var filteredData;
 var locationData;
-var dateStart = "4.5.2012"; // input real data
-var dateEnd = "4.5.2012"; // input real data
+var dateStart = "1.8.2012"; // input real data
+var dateEnd = "20.8.2012"; // input real data
 var includedStations = [1128,1027,1030]; // input real data
 var currentFilter;
 var boundAreadNumb = 0.1;
@@ -142,7 +142,7 @@ var onReadyCallback = null;
 
 var predictionLineFunction = null;
 
-function getLocationData() {
+function getLocationData(completion) {
   var fileLocationPath = "data/citybike_locations.csv";
   var cssv = d3.dsv(";", "text/plain");
 
@@ -162,6 +162,8 @@ function getLocationData() {
         } else {
           locationData = d;
         }
+
+        completion();
       }
   );
 }
@@ -214,7 +216,7 @@ function loadData(completion) {
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
 
-    locationData = getLocationData();
+    locationData = getLocationData(function() {
 
     cssv(fileFahrtenPath, parseCitbikeData, function (error, d) {
       if (error != null) {
@@ -274,6 +276,7 @@ function loadData(completion) {
       
         completion();
     });
+});
 }
 
 loadData( function() {
@@ -769,6 +772,11 @@ loadData( function() {
 
     var minXValue = d3.min(filteredData, function(d) {return currentFunction.lineFunctionX(d);}),
         maxXValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionX(d);});
+
+    var actualmaxYValue = d3.max(filteredData, function(d) {return d.y; });
+
+        maxYValue = Math.max(actualmaxYValue,maxYValue);
+
 
     // Step 4: add scales
    // y is backwards because 0 is the top left corner
