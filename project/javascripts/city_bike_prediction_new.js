@@ -54,6 +54,7 @@ TOADD function:
 
  */
 
+
 //Creates a MapView and renders it into th element with the specified id
 function cityBikeChart(chartId, containerId) {
 
@@ -212,6 +213,11 @@ function parseCitbikeData(d) {
 }
 
 
+function processData() {
+  
+}
+
+
 function loadData(completion) {
 
     var fileFahrtenPath = "data/fahrten_2012.csv";
@@ -359,10 +365,45 @@ loadData( function() {
     bandWidth = value;
     boundAreadNumb = bandWidth/2;
 
+    processData();
+
     if (chartIsReady) {
       redraw();
     }
   }
+
+
+  my.dateStart = function(value) {
+    if (!arguments.length) {
+      return bandWidth;
+    }
+
+    dateStart = value;
+
+    processData();
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
+
+  my.dateEnd = function(value) {
+    if (!arguments.length) {
+      return bandWidth;
+    }
+
+    dateEnd = value;
+
+    processData();
+
+    if (chartIsReady) {
+      redraw();
+    }
+  }
+
+
+  //bikechart.dateEnd(//Neues Datum)
 
 
   my.updateFunctionValue = function(index, key, value) {
@@ -928,6 +969,8 @@ loadData( function() {
     .duration(500)
     .style("opacity", 0);
     });
+
+
 
 
   }
