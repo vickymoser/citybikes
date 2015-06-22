@@ -5,6 +5,46 @@
   <script src="../scripts/topojson.js"></script>
 
 */
+/*
+TOADD function:
+ http://bl.ocks.org/weiglemc/6185069
+ Note:
+ var xValue = function(d) { return d.x;}, // data -> value
+ xScale = d3.scale.linear().range([0, width]), // value -> display
+ xMap = function(d) { return xScale(xValue(d));}, // data -> display
+ xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+ // setup y
+ var yValue = function(d) { return d.y;}, // data -> value
+ yScale = d3.scale.linear().range([height, 0]), // value -> display
+ yMap = function(d) { return yScale(yValue(d));}, // data -> display
+ yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+
+ svg.selectAll(".dot")
+ .data(scatterPlotData)
+ .enter().append("circle")
+ .attr("class", "dot")
+ .attr("r", 3.5)
+ .attr("cx", xMap)
+ .attr("cy", yMap)
+ .style("fill", "#2c7fb8")
+ .on("mouseover", function(d) {
+ tooltip.transition()
+ .duration(200)
+ .style("opacity", .9);
+ tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
+ .style("left", (d3.event.pageX + 5) + "px")
+ .style("top", (d3.event.pageY - 28) + "px");
+ })
+ .on("mouseout", function(d) {
+ tooltip.transition()
+ .duration(500)
+ .style("opacity", 0);
+ });
+ */
+
 //Creates a MapView and renders it into th element with the specified id
 function cityBikeChart(chartId, containerId) {
 
