@@ -230,7 +230,6 @@ FilterTime.prototype = {
             if( newTimeToCheck.getTime() < this.timeForFilterStart.getTime() ){ //if filter is set for Month
                 return false;
             } else {
-                console.log("after today");
 
                 if( newTimeToCheck.getTime() > this.timeForFilterEnd.getTime() ) {
                     this.done = true;

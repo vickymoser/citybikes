@@ -13,6 +13,14 @@ function DataRow(x, y) {
   this.y = y;
 };
 
+function DataRowScatterPlot(x, y, stationID, stationName, district) {
+  this.x = x;
+  this.y = y;
+  this.stationID = stationID;
+  this.stationName = stationName;
+  this.district = district;
+};
+
 d3.select(window).on('resize', resize); 
 
 var containerId = containerId;
@@ -45,14 +53,16 @@ var yAxis = d3.svg.axis()
     .scale(yScale)
     .orient("left");
 
-var dataGraph;
+// BEGIN vars to input
+var scatterPlotData;
 var filteredData;
 var locationData;
-  var dateStart = "4.5.2012"; // input real data
-  var dateEnd = "4.5.2012"; // input real data
-  var includedStations = [1128,1027,1030]; // input real data
-  var currentFilter;
-
+var dateStart = "4.5.2012"; // input real data
+var dateEnd = "4.5.2012"; // input real data
+var includedStations = [1128,1027,1030]; // input real data
+var currentFilter;
+var boundAreadNumb = 0.1;
+// END vars to input
 
 var filteredStationData;
 
@@ -92,7 +102,7 @@ function getLocationData() {
   cssv(fileLocationPath, function(d){
     return {
       stationsID : +d.StationsID,
-      bezirk : +d.Bez,
+      bezirk : +d.Bezirk,
       station : d.Station
     }
   }, function (error, d) {
@@ -157,6 +167,8 @@ function loadData(completion) {
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
 
+    locationData = getLocationData();
+
     cssv(fileFahrtenPath, parseCitbikeData, function (error, d) {
       if (error != null) {
         console.log(error);
@@ -174,24 +186,43 @@ function loadData(completion) {
           currentFilter.includeLine( d[i] ) ;
         }
 
-        dataGraph = currentFilter.getGraph();
-        console.log( dataGraph );
+        var tempGraph = currentFilter.getGraph();
+        console.log( "tempGraph=");
+        console.log( tempGraph );
 
-        var lengthDataGraph = dataGraph.length;
+        var lengthDataGraph = tempGraph.length;
         var numberOfSelectedStations = currentFilter.getNumbOfStations();
         filteredData = [];
         var toPush;
-
+        scatterPlotData = [];
         for( var i = 0; i < lengthDataGraph; ++i ) {
           toPush = 0;
 
           for( var j = 0; j < numberOfSelectedStations; ++j ) {
-            if( dataGraph[i][j] != undefined ) toPush += dataGraph[i][j];
+            if( tempGraph[i][j] != undefined ) {
+              toPush += tempGraph[i][j];
+            }
           }
+
           toPush /= numberOfSelectedStations;
+
+          for( var j = 0; j < numberOfSelectedStations; ++j ) {
+            var toPushScatter = tempGraph[i][j] / toPush;
+            if( toPushScatter != undefined && ( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) ) {
+              var station = includedStations[j];
+              //var district = locationData[ locationData["stationsID"].indexOf(station) ];
+              scatterPlotData.push( new DataRowScatterPlot(i, toPushScatter, station, 0, 0) );
+            }
+          }
           filteredData.push(new DataRow(i,toPush));
         }
+        console.log("filteredData=");
         console.log(filteredData);
+
+        console.log("scatterPlotData=");
+        console.log(scatterPlotData);
+        console.log(locationData);
+
       }
       
         completion();
