@@ -47,6 +47,7 @@ var yAxis = d3.svg.axis()
 
 var data;
 var filteredData = [];
+var locationData = [];
 
 var filteredStationData;
 
@@ -80,7 +81,29 @@ var onReadyCallback = null;
 
 var predictionLineFunction = null;
 
+function getLocationData() {
+  var fileLocationPath = "data/citybike_locations.csv";
+  var cssv = d3.dsv(";", "text/plain");
 
+  cssv(fileLocationPath, function(d){
+    return {
+      stationsID : +d.StationsID,
+      bezirk : +d.Bez,
+      station : d.Station
+    }
+  }, function (error, d) {
+        if (error != null) {
+          console.log(error);
+        }
+
+        if (d == null) {
+          console.log("data is null");
+        } else {
+          locationData = d;
+        }
+      }
+  );
+}
 
 
 //Anfang für Christoph
@@ -110,13 +133,7 @@ function parseCitbikeData(d) {
   var minute = parseInt( bufferString2[1] );
   var second = parseInt( bufferString2[2].split(".")[0] );
 
-
-
-
   return{
-
-
-
     //fahrtnummer : +d.Fahrtnummer,
     entlehnstation : +d.Entlehnstation,
     entlehnzeitpunkt :  new Date( year, month, day, hour, minute, second) , // use function
@@ -131,7 +148,7 @@ function parseCitbikeData(d) {
 
 
 function loadData(completion) {
- 
+
     var fileFahrtenPath = "data/fahrten_2012.csv";
     var cssv = d3.dsv(";", "text/plain");
     console.log("starting parsing data");
@@ -147,7 +164,7 @@ function loadData(completion) {
         data = d;
         var length = d.length;
         var timeParseHelper = new FilterTime();
-        timeParseHelper.changeTime('1.4.2012', 2);
+        timeParseHelper.changeTime('1.4.2012');
         var composedFilterFunction = new ComposedFilterFunction();
         composedFilterFunction.addFilter(timeParseHelper);
         console.log("getting graph");
@@ -164,7 +181,7 @@ function loadData(completion) {
 }
 
 loadData( function() {
-
+  getLocationData(); // gets location data
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 5, 2));
 
   currentFunction.addFunction(new GaussianFunction(0.3, 3, 10, 2));

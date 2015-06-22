@@ -9,6 +9,12 @@
 How to use:
 
  */
+/*
+    global vars
+ */
+
+var graphCounter;
+var graphFilterObject;
 
 /*
     class AbstractFilterFunction
@@ -23,9 +29,15 @@ AbstractFilterFunction.prototype.includeLine= function( line ){};
 
 /*
     class ComposedFilterFunction
+    1.Filter: time
+    2.Filter: location
  */
 function ComposedFilterFunction( filters ) {
     AbstractFilterFunction.call(this);
+    graphCounter = 1;
+    this.positionTimeFilter = 0;
+    this.positionLocationFilter = 1;
+    this.numbOfFilters = 2;
     this.filters = [];
 }
 
@@ -55,22 +67,21 @@ ComposedFilterFunction.prototype = {
 
     //check if the line of data is included with the current filter settings
     includeLine : function( line ){
-        var length = this.filters.length;
-
-        for( var i = 0; i < length ; i++) {
+        for( var i = 0; i < this.numbOfFilters ; i++) {
             if( !this.filters[i].includeLine( line )) return false;
         }
         return true;
     },
 
     getGraph : function () {
-        var length = this.filters.length;
+        var buffGraph = graphFilterObject;
+        graphFilterObject = [];
+        this.filters[0].resetVars();
+        return buffGraph;
+    },
 
-        for( var i = 0; i < length ; i++) {
-            if( this.filters[i].type == "FilterTime") {
-                return this.filters[i].getGraph();
-            }
-        }
+    getNumbOfStations : function() {
+        return this.filters[1].getNumbOfStations();
     }
 };
 
@@ -85,11 +96,9 @@ function FilterTime( /*timeForFilter, timeFrame*/ ) {
 
     this.timeForFilterStart = null;
     this.timeForFilterEnd = null;
-    this.graph = [];
-    this.numbersInPeriod = 0;
-    this.timePeriodToCheck = 1;
-    this.done = null;
-    this.isDay = null;
+    this.timeFrameCounter = 0;
+    this.done = false;
+    this.isDay = false;
     //this.daysInMonth = 0;
     //this.changeTime( timeForFilter, timeFrame);
 }
@@ -120,14 +129,22 @@ FilterTime.prototype = {
         console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
         console.log("Day= " + this.timeForFilterStart.getDate() + "Month= " + this.timeForFilterStart.getMonth() );
         console.log("daysInMonth= " + new Date( this.timeForFilterStart.getYear(), this.timeForFilterStart.getMonth(),0).getDate() );
-        this.numbersInPeriod = 0;
-        if( this.isDay ) {
-            this.timePeriodToCheck = 0;
-        } else {
-            this.timePeriodToCheck = 1;
-        }
 
-        this.graph = [];
+        if( this.isDay ) {
+            this.timeFrameCounter = 0;
+        } else {
+            this.timeFrameCounter = this.timeForFilterStart.getDate();
+        }
+        graphCounter = 0;
+        this.done = false;
+    },
+
+    resetVars : function() {
+        if( this.isDay ) {
+            this.timeFrameCounter = 0;
+        } else {
+            this.timeFrameCounter = this.timeForFilterStart.getDate();
+        }
         this.done = false;
     },
 
@@ -180,25 +197,19 @@ FilterTime.prototype = {
         var timeToCheck = line[timeName];
         if( this.isDay ) { //if time under the month
             if( timeToCheck.getMonth() == this.timeForFilterStart.getMonth() && timeToCheck.getDay() == this.timeForFilterStart.getDay() ) {
-                if( this.timePeriodToCheck == timeToCheck.getDate() ) { //if the day you are looking at
-                    this.numbersInPeriod ++;
+                if( this.timeFrameCounter == timeToCheck.getHours() ) { //if the day you are looking at
                     return true;
                 } else {
-                    if( this.timePeriodToCheck != timeToCheck.getDate() ) {
-                        this.graph.push( this.numbersInPeriod );
-                        this.timePeriodToCheck = timeToCheck.getDate();
-                        this.numbersInPeriod = 1;
-                        return true;
-                    } else {
-                        this.timePeriodToCheck++;
-                        return true;
-                    }
+                    ++this.timeFrameCounter;
+                    ++graphCounter;
+                    return true;
                 }
             } else {
                 var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
-                if ( newTimeToCheck.parse() > this.timeForFilterStart.parse() ) {
+                if ( newTimeToCheck.parse() > this.timeForFilterEnd.parse() ) {
                     this.done = true;
                 }
+                return false;
             }
         } else {
             var newTimeToCheck = new Date( timeToCheck.getDay(), timeToCheck.getMonth(), timeToCheck.getDay(), 0, 0, 0);
@@ -207,32 +218,18 @@ FilterTime.prototype = {
             } else {
                 if( newTimeToCheck.parse() > this.timeForFilterStart.parse() ) {
                     this.done = true;
-                    this.graph.push( this.numbersInPeriod )
                     return false;
                 } else {
-                    if( this.timePeriodToCheck == timeToCheck.getDate() ) { //if the day you are looking at
-                        this.numbersInPeriod ++;
+                    if( this.timeFrameCounter == timeToCheck.getDate() ) { //if the day you are looking at
                         return true;
                     } else {
-                        this.graph.push( this.numbersInPeriod );
-                        this.timePeriodToCheck = timeToCheck.getDate();
-                        this.numbersInPeriod = 1;
+                        this.timeFrameCounter = timeToCheck.getDate();
+                        ++graphCounter;
                         return true;
                     }
                 }
             }
         }
-    },
-    getGraph : function() {
-        this.numbersInPeriod = 0;
-        if( this.isDay ) {
-            this.timePeriodToCheck = 0;
-        } else {
-            this.timePeriodToCheck = 1;
-        }
-        var returnGraph = this.graph;
-        this.graph = [];
-        return returnGraph;
     }
 
 };
@@ -243,10 +240,11 @@ FilterTime.prototype = {
  @locationFilt: String the location (all = alle, one number = district, many numbers = districts
  @pathToLoxationFile: String path to file CITYBIKEOGD.csv
  */
-function FilterLocation( locationFilt, pathToLocationFile ) {
+function FilterLocation( locationFilt ) {
     AbstractFilterFunction.call(this);
-    this.pathToLocationFile = pathToLocationFile;
     this.locationFilt = locationFilt;
+    this.numberOfStations = this.locationFilt.length;
+    this.buffGraphCounter = 0;
 }
 
 //FilterTime is now a "child" of AbstractFilterFunction
@@ -259,49 +257,42 @@ delete FilterLocation.prototype.includeLine();
 //JSON notation, non privileged public
 FilterLocation.prototype = {
     /*
-     changes the time frame
+         changes the stations
      */
     type: "FilterLocation",
     includeLine: function( line ) {
-
+        var locationToCheck = line[Entlehnstation];
+        for(var i = 0; i < this.numberOfStations; ++i ) {
+            if( locationToCheck == this.locationFilt[i] ) {
+                if( this.buffGraphCounter != graphCounter ) {
+                    for(var j = this.buffGraphCounter; j <= graphCounter; ++j ) {
+                        graphFilterObject[this.buffGraphCounter].push(new Array(this.numberOfStations));
+                    }
+                    this.buffGraphCounter = graphCounter;
+                }
+                if( graphFilterObject[graphCounter][i] == undefined ) {
+                    graphFilterObject[graphCounter][i] = 1;
+                } else {
+                    ++graphFilterObject[graphCounter][i];
+                }
+                return true;
+            }
+        }
+        return false;
     },
     /*
 
      */
     setLocationFilt : function ( locationFilt ) {
-
+        this.buffGraphCounter = 0;
+        this.locationFilt = locationFilt;
+        this.numberOfStations = this.locationFilt.length;
     },
-    /*
-        all = get all stations
-     */
-    getStationsFromDistrict : function( district ) {
-        var cssv = d3.dsv(";", "text/plain");
-
-        cssv(this.pathToLocationFile, function(d){
-            return{
-
-            }
-        }, function (error, data) {
-            if (error != null) {
-                console.log(error);
-            }
-
-            if (data == null) {
-                throw "data is null";
-            } else {
-                var length = data.length;
-                for (var i = 0; i < length; i++) {
-                    if( district == "all" ) {
-
-                    } else if (district === parseInt(district, 10)){
-
-                    } else {
-
-                    }
-                }
-            }
-        });
-
+    getNumbOfStations: function() {
+        return this.locationFilt.length;
+    },
+    getSelectedStations: function() {
+        return this.locationFilt;
     }
 }
 
