@@ -69,11 +69,11 @@ var rawData;
 var scatterPlotData;
 var filteredData;
 var locationData;
-var dateStart = "1.5.2012"; // input real data
-var dateEnd = "20.5.2012"; // input real data
+var dateStart = "1.2.2012"; // input real data
+var dateEnd = "20.2.2012"; // input real data
 var includedStations = [1067,1027,1030]; // input real data
 var currentFilter;
-var boundAreadNumb = 20;
+var boundAreadNumb = 10;
 // END vars to input
 
 var filteredStationData;
@@ -194,6 +194,8 @@ function processData() {
     filteredData = [];
     var toPush;
     scatterPlotData = [];
+    console.log("boundAreadNumb= " + boundAreadNumb);
+
     for( var i = 0; i < lengthDataGraph; ++i ) {
         toPush = 0;
 
@@ -204,12 +206,10 @@ function processData() {
         }
 
         toPush /= numberOfSelectedStations;
-
         for( var j = 0; j < numberOfSelectedStations; ++j ) {
             if( tempGraph[i][j] != undefined) {
                 var toPushScatter = tempGraph[i][j];// / numberOfSelectedStations;
-                if( toPushScatter > ( toPush + boundAreadNumb ) || toPushScatter < ( toPush - boundAreadNumb ) ) {
-                    console.log("reach j= " + j);
+                if( !( toPushScatter < ( toPush + boundAreadNumb ) && toPushScatter > ( toPush - boundAreadNumb ) ) ) {
                     var station = includedStations[j];
                     //var district = locationData[ locationData["stationsID"].indexOf(station) ];
                     scatterPlotData.push( new DataRowScatterPlot(i, toPushScatter, station, 0, 0) );
@@ -648,12 +648,16 @@ loadData( function() {
         maxYValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionY(d); });
 
         var actualmaxYValue = d3.max(filteredData, function(d) {return d.y; });
-
-        maxYValue = Math.max(actualmaxYValue,maxYValue);
-
+      var actualmaxYValueScatterPlot = d3.max(scatterPlotData, function(d) {return d.y; });
 
 
-    var minXValue = d3.min(filteredData, function(d) {return currentFunction.lineFunctionX(d);}),
+      maxYValue = Math.max(actualmaxYValue,maxYValue);
+      maxYValue = Math.max(actualmaxYValueScatterPlot,maxYValue);
+
+
+
+
+      var minXValue = d3.min(filteredData, function(d) {return currentFunction.lineFunctionX(d);}),
         maxXValue = d3.max(filteredData, function(d) {return currentFunction.lineFunctionX(d);});
 
     console.log("maxYValue updated"+maxYValue);
@@ -914,26 +918,28 @@ loadData( function() {
 
 
 
+    if( scatterPlotData.length != 0) {
+        chart.selectAll(".dot").data(scatterPlotData).enter().append("circle")
+            .attr("class", "dot")
+            .attr("r", 3.5)
+            .attr("cx", xValue)
+            .attr("cy", yValue)
+            .style("fill", "#2c7fb8")
+            .on("mouseover", function(d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
+                    .style("left", (d3.event.pageX + 5) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+    }
 
-    chart.selectAll(".dot").data(scatterPlotData).enter().append("circle")
-    .attr("class", "dot")
-    .attr("r", 3.5)
-    .attr("cx", xValue)
-    .attr("cy", yValue)
-    .style("fill", "#2c7fb8")
-    .on("mouseover", function(d) {
-    tooltip.transition()
-    .duration(200)
-    .style("opacity", .9);
-    tooltip.html( d["stationID"] + "name: " +d["stationName"] +"<br/> district: " + d["district"] )
-    .style("left", (d3.event.pageX + 5) + "px")
-    .style("top", (d3.event.pageY - 28) + "px");
-    })
-    .on("mouseout", function(d) {
-    tooltip.transition()
-    .duration(500)
-    .style("opacity", 0);
-    });
 
 
 
