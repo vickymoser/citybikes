@@ -58,7 +58,7 @@ var xAxis = d3.svg.axis()
     .scale(xScale)
     .orient("bottom")
     .tickFormat(function(d){
-      return ""+d+".01"
+      return ""+ d +".08"
     });
 
 var yAxis = d3.svg.axis()

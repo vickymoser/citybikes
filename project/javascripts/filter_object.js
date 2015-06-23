@@ -92,6 +92,9 @@ ComposedFilterFunction.prototype = {
 
     getNumbOfStations : function() {
         return this.filters[this.positionLocationFilter].getNumbOfStations();
+    },
+    getMonthOfStartTime : function() {
+        return this.filters[this.positionTimeFilter].getMonthOfStartTime;
     }
 };
 
@@ -245,6 +248,9 @@ FilterTime.prototype = {
                 }
             }
         }
+    },
+    getMonthOfStartTime : function() {
+        return this.timeForFilterStart.getMonth() - 1;
     }
 
 };
