@@ -58,7 +58,7 @@ var xAxis = d3.svg.axis()
     .scale(xScale)
     .orient("bottom")
     .tickFormat(function(d){
-      return ""+ d +".08"
+      return ""+ d +".08    "
     });
 
 var yAxis = d3.svg.axis()
@@ -451,7 +451,8 @@ loadData( function() {
       .attr('d', zeroAreFunction(filteredData))
       .attr('stroke', 'grey')
       .attr('stroke-width', 1)
-      .attr('fill', '#d3d3d3');
+      .attr('fill', '#d3d3d3')
+      .attr('opacity', 0.3);
 
       d3.select('#'+funcKey)
       .transition(200)
