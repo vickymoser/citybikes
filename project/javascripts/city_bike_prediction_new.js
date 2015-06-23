@@ -6,7 +6,8 @@
 
 */
 /*
-
+ replace("st", '')
+ parseInt()
 Used Scatterplot example:
  http://bl.ocks.org/weiglemc/6185069
  */
@@ -69,8 +70,8 @@ var rawData;
 var scatterPlotData;
 var filteredData;
 var locationData;
-var dateStart = "1.2.2012"; // input real data
-var dateEnd = "20.2.2012"; // input real data
+var dateStart = "1.8.2012"; // input real data
+var dateEnd = "20.8.2012"; // input real data
 var includedStations = [1067,1027,1030]; // input real data
 var currentFilter;
 var boundAreadNumb = 10;
@@ -342,7 +343,7 @@ loadData( function() {
     if (!arguments.length) {
       return dateStart;
     }
-
+    console.log("reach start");
     dateStart = value;
 
     processData();
